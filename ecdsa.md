@@ -4,10 +4,11 @@ ECDSA specifies the use of [elliptic curves](./ecgroups.md) for the construction
 
 Let $\mathbb{Z_q}$ represents the field of integers modulo $q$ writen $(\mathbb{Z}, +, \times, q)$.
 
-Let $\mathbb{E}$ be an [elleiptic curve group](./ecgroups.md) $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, p, G)$, defined over $\mathbb{Z_q}$ where
+Let $\mathbb{E}$ be an [elleiptic curve group](./ecgroups.md) $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, p, G, O)$, defined over $\mathbb{Z_q}$ where
 - $\circ$ is the binary group operation, a.k.a addition of points,
 - $G$ is the generator of the group,
 - p is the order of the generator $G$,
+- O is the identity element, a.k.a neutral element
 
 Review following as essetial for the understanding of ECDSA math below:
 - Ellements of $\mathbb{Z}$ are integer numbers and always writen using small letters, e.g.: $a, r$
@@ -17,9 +18,9 @@ Review following as essetial for the understanding of ECDSA math below:
 - $a + b$ denotes the addition of two integers $a, b \in \mathbb{Z_q}$. They are allways performed modulo $q$ even if omited.
 - $a \times b$ denotes the multiplication of two integers $a, b \in \mathbb{Z_q}$. They are allways performed modulo $q$ even if omited.
 
-### Operations in $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, p, G)$
+### Operations in $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, p, G, O)$
 - $A \circ B$ denotes the addition of two points $A=(x_A, y_A) \text{ and } B=(x_B, y_B)$, both $A, B \in \mathbb{E}$. Operations on points coordinates $x_A, y_A, x_B, y_B$ are performed in $\mathbb{Z_q}$, means modulo $q$.
-- $nA$ is the $n$-times addition of the point $A$ to itself. Means $nA=G \circ_0 A \circ_1 A \dots \circ_{n-1} A$. This is called the scalar multiplication of the point $A \in \mathbb{E}$ by the integer $n \in \mathbb{Z_q}$.
+- $nA$ is the $n$-times addition of the point $A$ to itself. Means $nA=O \circ_0 A \circ_1 A \dots \circ_{n-1} A$. This is called the scalar multiplication of the point $A \in \mathbb{E}$ by the integer $n \in \mathbb{Z_q}$.
 - Recall that on $\mathbb{E}$, following applies:
   - $aG \circ bG = (a + b)G$
   - $a (bG) = (a \times b)G$
