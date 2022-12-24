@@ -30,15 +30,15 @@ Ultimate goal will be to allow for the evolvement of a new MPC service ecosystem
 - a wallet-user-experience for common people.
 
 # Content
-- I start by dealing with [computation hardness assumptions](./cha.md), as it is the fundament of cryptography,
+- I start by dealing with [computational hardness assumptions](./cha.md), as they are the fundament of cryptography,
 - I then try to understand [distributed key generation](./dkg-tss.md). In this context, I provide what I think is the simplest explanation of shamir secret sharing,
 - I then move over to dealing with the algebra of [fields, groups, elliptic curves](./ecgroups.md) and associated hardness assumptions, as these are the fundamentals of modern cryptographic constructions,
 - I finally get a look at signature standards such as:
-- [ECDSA] used by bitcoin and ethereum, trying to understand how to implement a [threshold signature scheme (TSS) on ECDSA](./ecdsa-tss.md). From a privacy preserving perspective, I also drop a deeper look into hierarchical deterministic keys as defined by [BIP32](./bip32.md). Disappointed by the complexity of MPC on ECDSA, I try to look further and find
-- [Schnorr signature], its usage by bitcoin and the possible application for aggregated and threshold signatures. Looks more promising than ECDSA, but not standardized enough, fortunately
-- [EdDSA](./eddsa-tss.md) comes to the rescue as the standardization path for schnorr signature schemes. Aggregated signatures and threshold signatures seem as simple here as they are on the original schnorr signature scheme.
+  - [ECDSA] used by bitcoin and ethereum, trying to understand how to implement a [threshold signature scheme (TSS) on ECDSA](./ecdsa-tss.md). From a privacy preserving perspective, I also drop a deeper look into hierarchical deterministic keys as defined by [BIP32](./bip32.md). Disappointed by the complexity of MPC on ECDSA, I try to look further and find
+  - [Schnorr signature], its usage by bitcoin and the possible application for aggregated and threshold signatures. Looks more promising than ECDSA, but not standardized enough, fortunately
+  - [EdDSA](./eddsa-tss.md) comes to the rescue as the standardization path for schnorr signature schemes. Aggregated signatures and threshold signatures seem as simple here as they are on the original schnorr signature scheme.
 
-I could stop here and start thinking on how to save the world, but to my disappointment, I notice that ethereum transactions only support ECDSA, despite the fact that the ethereum PoS scheme uses a simpler signature scheme named BLS to document consensus among validators. Curiosity leads to my suicidal attempt to understand [pairings](./pairings.md).
+I could stop here and start thinking on how to save the world, but to my disappointment, I notice that ethereum transactions only support ECDSA, despite the fact that the ethereum PoS validators use a simpler signature scheme named BLS to document consensus. This curiosity leads to my suicidal attempt to understand [pairings](./pairings.md).
 
 # On my plate next
 - describe BLS signatures- ...
