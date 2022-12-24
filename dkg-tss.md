@@ -127,7 +127,11 @@ Let assume we have $n$ parties $P_h, h \in H$ where $H= \\{1, \dots, n \\}$ and 
 - let assume $x_s$ is the value of the $x$ coordinate to hold secret values, all partial and the distributed secret, 
 - each $P_h$ commits to a distinct value of the $x$ coordinate $x_h$, such that $\forall_{h,m \in H \land h \ne m}, x_h \ne x_m, \land x_h \ne x_s$.
 - each $P_h$ discloses $x_h$ to all other parties,
-- each $P_h$ defines a secret polynomial of degree $k-1$ called $f_h(x) = \sum_{i=0}^{k-1} a_{hi}x^i$, where $t=k-1$, and $t$ is the signature threshold. This is done through the selection of random coefficients $a_{hi}$.
+- each $P_h$ defines a secret polynomial of degree $k-1$ called 
+
+  $$f_h(x) = \sum_{i=0}^{k-1} a_{hi}x^i$$
+
+  where $t=k-1$, and $t$ is the signature threshold. This is done through the selection of random coefficients $a_{hi}$.
 - each $P_h$ proceeds with a $t$ of $n$ sharing of the generated secret polynomial $f_h(x)$. The result is a list of points $(x_m, f_{h}(x_m))$ or $(x_m, S_{hm})$, where $\forall_{m \in H}, S_{hm}$ is the share to be sent by party $P_h$ to party $P_m$.
 - each party $P_m$ after receiving all shares $S_{hm}$ can compute it's secret share $$S_m=\sum_{h=1}^nS_{hm}$$
 
@@ -186,7 +190,11 @@ Even though the group can be additive or multiplicative, we will use the multipl
 $g^a$ can be viewed as a sort of public commitment to the value $a$.
 
 ## Providing a Commitment to Individual Secret Polinomials (Feldman VSS)
-Like described above, each party $P_h$ defines a polynomial of degree $k-1$ called $f_h(x) = \sum_{i=0}^{k-1} a_{hi}x^i$, where $k-1=t$, and $t$ is the signature threshold of the comitee. In order to allow for the verification of the integrity of the polynomial generate by party $P_h$, $P_h$ broadcasts the list of commitments to each polynomial coefficient $a_{hi}$. Each commitment looks like $A_{hi}=g^{a_{hi}}$, and the list to broadcast is $\\{A_{h0}, A_{h1}, \dots, A_{h(k-1)}\\}$.
+Like described above, each party $P_h$ defines a polynomial of degree $k-1$ called 
+
+$$f_h(x) = \sum_{i=0}^{k-1} a_{hi}x^i$$
+
+where $k-1=t$, and $t$ is the signature threshold of the comitee. In order to allow for the verification of the integrity of the polynomial generate by party $P_h$, $P_h$ broadcasts the list of commitments to each polynomial coefficient $a_{hi}$. Each commitment looks like $A_{hi}=g^{a_{hi}}$, and the list to broadcast is $\\{A_{h0}, A_{h1}, \dots, A_{h(k-1)}\\}$.
 
 Upon receiving his share $S_{hm}$ from party $P_h$, party $P_m$ can verify that $S_{hm}=f_h(x_m)$, meaning that the point is really on the secret polynomial $f_h(x)$ of party $P_h$. This is done by computing and comparing the image (or group elements) of $S_{hm}$.
 
@@ -207,6 +215,7 @@ A = g^S=\prod_{h=1}^nA_{h0}
 $$
 
 Shall the secret point be at another $x$ coordinate, the computation of A shall be adjusted accordingly. Theformula will look like:
+
 $$
 A = g^S=\prod_{h=1}^nA_{hs}=\prod_{h=1}^ng^{f_h(x_s)}
 $$
