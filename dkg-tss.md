@@ -25,7 +25,7 @@ If we give share-3 to Paul, either Bob and Alice, Bob and Paul or Alice and Paul
 For the elaboration of the math behind SSSS, we will be dealing with 2 sets of numbers (resp. indexes):
 
 ### Set of Polynomial Coefficients
-The set $I = \\{ 0,1, \dots, i,j,..., k-1 \\} $ is used to index coefficients of a polynomial, e.g. $f(x) = a_0 + a_1x + a_2x^2 + \dots + a_i+ \dots + a_{k-1}x^{k-1}$. 
+The set $I = \\{ 0,1, \dots, i,j,..., k-1 \\}$ is used to index coefficients of a polynomial, e.g. $f(x) = a_0 + a_1x + a_2x^2 + \dots + a_i+ \dots + a_{k-1}x^{k-1}$. 
 
 For a pairwise comparison of those coefficients, we will use $\forall_{i,j, i \ne j}$.
 
@@ -67,7 +67,7 @@ If for example $x_s=0$, then $S = f(0) = a_0$. Therefore using $x_s=0$ makes it 
 This secret polynomial can be defined by randomly selecting $a_1, \dots, a_{k-1}$ from a [finate field](./ecgroups.md#modular-arithmetic) $\mathbb{F_{(p^n)}}$. E.g.: for $a_1=-5, a_2=-4, a_3=1$ the following polynomial $f(x)=9 -5x -4x^{2}+ x^{3}$ can be used to hide the secret value $S=9$.
 
 ### Compute Individual Secret Shares
-After defining the polynomial $f(x)=x^{3} - 4x^{2}  - 5x + 9$, we select for each party $P_h, h \in \{1, \dots, 7\}$ a random $x_h$, compute the secret share $S_h=y_h=f(x_h)$ and finaly return the secret share $(x_h, S_h)$ to party $P_h$. The following picture displays the graph, the points holding each of the $7$ secret shares and the secret point $S=(0,9)$.
+After defining the polynomial $f(x)=x^{3} - 4x^{2}  - 5x + 9$, we select for each party $P_h, h \in \\{1, \dots, 7\\}$ a random $x_h$, compute the secret share $S_h=y_h=f(x_h)$ and finaly return the secret share $(x_h, S_h)$ to party $P_h$. The following picture displays the graph, the points holding each of the $7$ secret shares and the secret point $S=(0,9)$.
 
 ![polynomial d3 points](img/polynomial_d3_3x2.png)
 
@@ -90,23 +90,23 @@ In our example, knowing $4$ of the points above $\{(-2,-5), (-1,9), (2,-9), (3, 
 
 $$
 \begin{aligned}
-l_1(4) &= \frac{4-x_2}{x_1-x_2} * \frac{4-x_3}{x_1-x_3} * \frac{4-x_4}{x_1-x_4} = \frac{4+1}{-2+1} * \frac{4-2}{-2-2} * \frac{4-3}{-2-3} = \frac{5}{-1} * \frac{2}{-4} * \frac{1}{-5}=\frac{-1}{2}
+l_1(4) &= \frac{4-x_2}{x_1-x_2} \times \frac{4-x_3}{x_1-x_3} \times \frac{4-x_4}{x_1-x_4} = \frac{4+1}{-2+1} \times \frac{4-2}{-2-2} \times \frac{4-3}{-2-3} = \frac{5}{-1} \times \frac{2}{-4} \times \frac{1}{-5}=\frac{-1}{2}
 \\
-l_2(4) &= \frac{4-x_1}{x_2-x_1} * \frac{4-x_3}{x_2-x_3} * \frac{4-x_4}{x_2-x_4} = \frac{4+2}{-1+2} * \frac{4-2}{-1-2} * \frac{4-3}{-1-3} = \frac{6}{1} * \frac{2}{-3} * \frac{1}{-4}=1
+l_2(4) &= \frac{4-x_1}{x_2-x_1} \times \frac{4-x_3}{x_2-x_3} \times \frac{4-x_4}{x_2-x_4} = \frac{4+2}{-1+2} \times \frac{4-2}{-1-2} \times \frac{4-3}{-1-3} = \frac{6}{1} \times \frac{2}{-3} \times \frac{1}{-4}=1
 \\
-l_3(4) &= \frac{4-x_1}{x_3-x_1} * \frac{4-x_2}{x_3-x_2} * \frac{4-x_4}{x_3-x_4} = \frac{4+2}{2+2} * \frac{4+1}{2+1} * \frac{4-3}{2-3} = \frac{6}{4} * \frac{5}{3} * \frac{1}{-1} = \frac{5}{-2}
+l_3(4) &= \frac{4-x_1}{x_3-x_1} \times \frac{4-x_2}{x_3-x_2} \times \frac{4-x_4}{x_3-x_4} = \frac{4+2}{2+2} \times \frac{4+1}{2+1} \times \frac{4-3}{2-3} = \frac{6}{4} \times \frac{5}{3} \times \frac{1}{-1} = \frac{5}{-2}
 \\
-l_4(4) &= \frac{4-x_1}{x_4-x_1} * \frac{4-x_2}{x_4-x_2} * \frac{4-x_3}{x_4-x_3} = \frac{4+2}{3+2} *\frac{4+1}{3+1} * \frac{4-2}{3-2} = \frac{6}{5} * \frac{5}{4} * \frac{2}{1} = 3
+l_4(4) &= \frac{4-x_1}{x_4-x_1} \times \frac{4-x_2}{x_4-x_2} \times \frac{4-x_3}{x_4-x_3} = \frac{4+2}{3+2} \times\frac{4+1}{3+1} \times \frac{4-2}{3-2} = \frac{6}{5} \times \frac{5}{4} \times \frac{2}{1} = 3
 \end{aligned}
 $$
 
-We can then addup all weighted $l_h(4)$ in the interpolation formula to obtain $f(4)$
+We can then addup all weighted $l_h(4)$ in the interpolation formula to obtain $f(4)$.
 
 $$
 \begin{aligned}
-f(4) &= y_1*l_1(4) + y_2*l_2(4) + y_3*l_3(4) + y_4*l_4(4)
+f(4) &= y_1 \times l_1(4) + y_2 \times l_2(4) + y_3 \times l_3(4) + y_4 \times l_4(4)
 \\
-f(4) &= -5 \frac{-1}{2} + 9 + -9 * \frac{5}{-2} -15*3 = \frac{5}{2} + 9 + \frac{45}{2} - 45 = -11
+f(4) &= -5 \frac{-1}{2} + 9 + -9 \times \frac{5}{-2} -15 \times 3 = \frac{5}{2} + 9 + \frac{45}{2} - 45 = -11
 \end{aligned}
 $$
 
@@ -147,21 +147,25 @@ The distributed secret polynomial is not intended to be recovered as a whole, bu
 As soon as we know the set of participants $C=\\{1, \dots, t+1\\}$, involved into the distributed computation, each party $P_h, h \in H$ member of $C$ can be calles $P_c, c \in C$ and per consequence $S_h \equiv S_c$. 
 
 As we can compute the lagrange coefficients for the $(t, t+1)$ secret sharing to be,
+
 $$
 l_c(x_s) = \prod_{m=1, m \ne c}^{t+1} \frac{x_s - x_m}{x_c-x_m}
 $$
 
 the distributed secret could theoreticaly be recovered with the formula
+
 $$
 f(x_s) = \sum_{c=1}^{t+1}f_c(x_s)l_c(x_s)= \sum_{c=1}^{t+1}S_cl_c(x_s)
 $$
 
 Because $S_c$ is only known to party $P_c, c \in C$, none of the parties $P_c can compute $f(x_s)$ alone, even though each party $P_c$ is holding an additive part
+
 $$
 w_c = S_cl_c(x_s)
 $$
 
 If $w_c$ is the additive part of the distributed secret held by $P_c, c \in C$, the distributed secret is
+
 $$
 f(x_s) = \sum_{c=1}^{t+1}w_c
 $$
