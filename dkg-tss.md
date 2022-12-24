@@ -205,10 +205,18 @@ $$
 As we can see in the formula,
 - $x_m$ is known to all parties,
 - $A_{hi}$ are known to all parties,
-- $P_m$ can compare $g^{S_{hm}}$ to $\prod_{i=0}^{k-1} A_{hi}^{x_m^i}$ to know if the received share is realy a image of $f_h(x)$.
+- $P_m$ can compare 
+  
+  $$g^{S_{hm}} \text{ to } \prod_{i=0}^{k-1} A_{hi}^{x_m^i}$$ 
+  
+  to know if the received share is realy a image of $f_h(x)$.
 
 ## Computing the Public Image of the Distributed Secret
-In order to verify computation colaboratively produced by the secret point $S$, each party $P_h$ can compute and publish the commitment to $S$ called $A=g^S$. Knowing all $A_{hi}$, and recalling that the distributed secret was $S=\sum_{h=1}^na_{h0}$ (as $x_s=0 $), each party can compute and publish the distributed public image of S.
+In order to verify computation colaboratively produced by the secret point $S$, each party $P_h$ can compute and publish the commitment to $S$ called $A=g^S$. Knowing all $A_{hi}$, and recalling that the distributed secret was 
+
+$$S=\sum_{h=1}^na_{h0}$$
+
+(as $x_s=0 $), each party can compute and publish the distributed public image of S.
 
 $$
 A = g^S=\prod_{h=1}^nA_{h0}
