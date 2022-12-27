@@ -210,7 +210,7 @@ In the binary case, curves parameters for the family of elliptic-curve groups $(
 
 ## Prime Case Elliptic-Curves
 In the prime case, the elliptic-curve group $(\mathbb{E_{(\mathbb{Z_p})}}, \circ, O, G, n)$ can be defined using the notation $(p,a,b,G,n,h)$ where:
-- $p$ is a large prime and the order of the field $\mathbb{Z_p}$ (number of elements in $\mathbb{Z_p} \texttt{ or } |\mathbb{Z_p}|$),
+- $p$ is a large prime and the order of the field $\mathbb{Z_p}$ (number of elements in $\mathbb{Z_p} \text{ or } |\mathbb{Z_p}|$),
 - $\mathbb{Z_p}$ is the field of order $p \in \mathbb{Z}$, such that $\forall_{T=(x_T,y_T)}, \forall_{Q=nP=(x_Q, y_Q)}, x_T, y_T, n, x_Q, y_Q \in \mathbb{Z_p}$,
 - $a, b$ are the parameters of the curve equation $y^2= x^3 + ax + b$ (equation written in Weierstrass form),
 - $G$ is the generator point,
@@ -227,7 +227,7 @@ The curve equation $E(x,y) \implies y^2= x^3 + ax + b$ over $\mathbb{Z_{2^8}}$ i
 - $\text{b = 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000007}$
 
 The generator point $G$ in uncompressed form is:
-- $\texttt{G = 04 79BE667E F9DCBBAC 55A06295 CE870B07 029BFCDB 2DCE28D9 59F2815B 16F81798 483ADA77 26A3C465 5DA4FBFC 0E1108A8 FD17B448 A6855419 9C47D08F FB10D4B8
+- $\text{G = 04 79BE667E F9DCBBAC 55A06295 CE870B07 029BFCDB 2DCE28D9 59F2815B 16F81798 483ADA77 26A3C465 5DA4FBFC 0E1108A8 FD17B448 A6855419 9C47D08F FB10D4B8
 }$
 
 The generator point $G$ in compressed form is:
