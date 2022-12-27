@@ -146,7 +146,6 @@ Both share conversion messages can be batched. They can also be run for many ver
 Recall that each party $P_c$ has the shares: $k_c, \sigma_c$ such that:
 
 $$
-
 (k \times a)=\sum_{c \in C}\sigma_c \text{ and } k=\sum_{c \in C}k_c
 $$
 
