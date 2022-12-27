@@ -69,71 +69,101 @@ Let $(\mathbb{G}, \circ, E, G, p)$ be a group with generator $G$ of order $p$, o
 # Elliptic-Curves (EC)
 Keeping simple for the purpose of this work, [elliptic curve](https://mathworld.wolfram.com/EllipticCurve.html) are a special types of equation with the form $E(x,y) \implies y^2=x^3+ax+b$ (in the weierstrass form), whose elements known as points $(x, y)$. Enriched with a well defined points addition operation, they share some algebraic properties useful for the construction of cryptographic primitives.
 
-## Elliptic-Curves Arithmetic (ECA)
-The following picture display the artihmetic on elliptic curves. Recall that picture uses $+$ as group operation instead of $\circ$, like consistently uses in this document.
+## Arithmetic Elliptic-Curves
+### Identity Element
+There is a point $O$ on the curve so that $\forall_{P \in \mathbb{E}}, P \circ O = P$. This point is the identity element of the group. For some curves it is an imaginary point called the __Point at Infinity__.
 
-![EC Aritmetic](./img/ECClines.svg)
-
-This picture defines following assuptions:
-
-__ECA-0__: defines an imaginary point $O$ on the curve so that $\forall_{P \in \mathbb{E}}, P + O = P$, and calls it the __Point at Infinity__.
-
-__ECA-1__: On an elliptic curve, a strait line can cross up to $3$ points $P, Q, R$. ECA defines the sum of those three points to be $O$, means $P + Q + R = O$.
-
-__ECA-2__: If a strait line crosses only two points $P, Q$, and is tangent to $Q$, ECA assumes it crosses $Q$ two times and defines $P + Q + Q = O$.
-
-__ECA-3__: If a line crosses only two points $P, Q$, and is neither tangent to $P$ nor to $Q$, ECA assumes it crosses the third imaginary point $O$ and defines $P + Q + O = O$.
-
-__ECA-4__: If a line crosses only one point $P$, then that line is tangent to the curve at $P$. ECA assumes that line crosses $P$ twice and crosses the imaginary point $O$ and ECA defines $P + P + O = O$.
-
-Based on the assumption above, following arithmetic operations can be implemented on elliptic-curves.
+### Elliptic-Curves Arithmetic Law (ECA)
+On an elliptic-curve, a strait line can cross up to $3$ points $P, Q, R$. ECA defines the sum of those three points to be the identity element $O$, meaning $P \circ Q \circ R = O$.
 
 ### Additive Inverse
-Based on ECA-3, the inversion of a point can be defined as the reflection of the point over the $x$ axis. Means the inverse of the point $P=(x_p, y_p)$ is the point $Q = -P=(x_p, -y_p)$.
-$$P+Q+O=O \implies Q=-P$$
+The following figure displays a line, that crosses only two points $P, Q$ and is neither tangent to $P$ nor to $Q$.
 
-Based on ECA-4, if the point $P$ is tangent to the curve at $x_p=0$, then the point $P$ is its proper inverse, leading to: 
-$$P + P + O = O \implies P = -P$$
+![EC Aritmetic](./img/eca-2.png)
 
-### Addition
-Based on ECA-1, each strait line touching $3$ distinct points $P, Q, R$ defines the addition of two distinct points, such that:
-$$P + Q + R = O \implies P + Q = -R$$
+ECA assumes it also crosses the identity point $O$ and defines:
 
-where $-R$ is the inverse of $R$.
+$$
+\begin{aligned}
+Q \circ P \circ O &= O
+\\
+Q \circ O &= O \circ (-P)
+\\
+Q &= -P
+\end{aligned}
+$$
 
-### Doubling
-Based on ECA-2, a strait line tangent at point $Q$ and crossing a second point $P \ne O$, produces the doubling of $Q$, such that:
-$$P + Q + Q = O \implies Q + Q = 2Q = -P$$
+Therefore $-P$ is set to be the additive inverse of $P$. 
+
+In the weierstrass form, this also means the point $P=(x_P, y_P)$ is the inverse of the point $Q = -P=(x_P, -y_P)$.
+
+### Point Addition
+ECA states that the sum of $3$ points $P, Q, R$ on the same line is the identity element $O$. Meaning that $P \circ Q \circ R = O$ as displayed on the figure bellow.
+
+![EC Aritmetic](./img/eca-1.png)
+
+Per consequence, the  sum of any $2$ of the points $P, Q, R$ is the addive inverse of the thrid point. 
+$$
+\begin{aligned}
+P \circ Q \circ R &= O
+\\
+P \circ Q &= O \circ (-R)
+\\
+P \circ Q &= -R
+\end{aligned}
+$$
+
+### Point Doubling
+The following figure displays a strait line, tangent to the curve at point $Q$ and crossing a second point $P \ne O$.
+
+![EC Aritmetic](./img/eca-3.png)
+
+This geometrie can be used to produce the doubling of $Q$, as ECA assumes that the line touches the curve twice at any tangent point, such that:
+
+$$
+\begin{aligned}
+P \circ Q \circ Q &= O
+\\
+Q \circ Q &= O \circ (-P)
+\\
+2Q &= -P
+\end{aligned}
+$$
+
 
 ## Finite Groups over Elliptic-Curve
 With the addition operation and the additive inverse defined above, the ECA allows the construction of finite groups over elements of an elliptic curve. Meaning the ECA allows the construction of the relation $\mathbb{Z_q}$ x $\mathbb{E} \implies \mathbb{E}$, where for a point $P \in \mathbb{E}$ and a number $n \in \mathbb{Z_q}$, the point $Q=nP \in \mathbb{E}$ can be generated, where $\mathbb{Z_q}$ is a finite field $(\mathbb{Z}, +, \times, q)$ of order $q$.
 
 Therefore, from a generator point $G$, ECA allows the construction of finite cyclic groups on an elliptic curve $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, O, G, p)$, where 
-- $+$ is the points addition operation defined above, including the additive inverse and the identity element at $O$, 
+- $\circ$ is the points addition operation defined above, including the additive inverse and the identity element at $O$, 
 - $G$ is the generator point,
 - $p$ is the order of the group generator $G$, or the number of points on curve $\mathbb{E}$ that can be generated from $G$,
-- $\mathbb{Z_q}$ is the field of integers of order $q \in \mathbb{Z}$ such that $\forall_{P=(x_p,y_p)}, \forall_{Q=nP=(x_q, y_q)}, x_p, y_p, n, x_q, y_q \in \mathbb{Z_q}$. With this, we mean not only the number of operation $n$, but also all point coordinates $x$ and $y$ have to be elements of $\mathbb{Z_q}$. This means $q$ is used to keep the computation of group elements in bounds.
+- $\mathbb{Z_q}$ is the field of integers of order $q \in \mathbb{Z}$ such that $\forall_{P=(x_P,y_P)}, \forall_{Q=nP=(x_Q, y_Q)}, x_P, y_P, n, x_Q, y_Q \in \mathbb{Z_q}$. With this, we mean not only the number of operation $n$, but also all point coordinates $x$ and $y$ have to be elements of $\mathbb{Z_q}$. This means $q$ is used to keep the computation of group elements in bounds. This also means that all relevant operation are performed modulo $q$.
 
 Let 
 - $n \in \mathbb{Z_q}$ and 
 - $G \in \mathbb{E_{(\mathbb{Z_q})}}$, then 
-- $nG = P \in \mathbb{E_{(\mathbb{Z_q})}}$ stands for the $n$-times addition of the point $G$ to the identity element, or $nG = O \circ_{1} G \circ_{2} G \dots \circ_{n-1} G \circ_{n} G$
+- $nG = P \in \mathbb{E_{(\mathbb{Z_q})}}$ stands for the $n$-times addition of the point $G$ to the identity element, or 
+
+$$nG = O \circ_{1} G \circ_{2} G \dots \circ_{n-1} G \circ_{n} G$$
 
 The group property of elliptic-curves allows the statement like: 
 - $nG \circ mG = (n + m)G$ and 
 - $n(mG) = (n \times m)G$
 
-The first statement $nG \circ mG = (n + m)G$ tell us that, knowing the point $nG$ and $mG$, we can compute $(n+m)G$, without knowing neither $n$ nor $m$.
+The first statement $nG \circ mG = (n + m)G$ tell us that, knowing the point $nG$ and $mG$, we can compute $(n+m)G$, even without knowing or without disclosing neither $n$ nor $m$.
 
-The second statement $n(mG) = (n \times m)G$ tell us that: knwoing the scalar $n$ and the point $mG$, we can compute the point $(n \times m)G$ without having to know $m$.
+The second statement $n(mG) = (n \times m)G$ tell us that: knwoing the scalar $n$ and the point $mG$, we can compute the point $(n \times m)G$, even without having to know $m$.
+
+This detail level is essential for the clean understanding of resulting hardness assumptions defined below.
 
 # EC based Hardness Assumption
 ## Elliptic-Curve Discrete Log Problem (ECDLP)
-Working on the cyclic, finite, additive elliptic-curve group $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, O, G, p)$, and given a point $Q \in \mathbb{E}$, it is hard to find the number $n$ such that $Q=nG$. Means it is hard to compute how many times we have to add the point $G$ to itself to get to the point $Q$.
+Working on the cyclic, finite elliptic-curve group $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, O, G, p)$, and given a point $Q \in \mathbb{E}$, it is hard to find the __sufficiently large__ number $n$ such that $Q=nG$. This means it is hard to compute how many times we have to add the point $G$ to itself to get to the point $Q$.
 
 Following integer arithmetic, we would say $G = (n^{-1}) Q = mQ$ where $m=n^{-1} \in \mathbb{Z_q}$. Recall that $n^{-1}$ is an integer number, as it is the multiplicative inverse of $n$ in $\mathbb{Z_q}$. 
 
-If $n$ is unknown, there is no easy way to find $m$ without just incrementally adding $Q$ to itself and testing the outcome.
+If $n$ is unknown, there is no easy way to find $m$ without just incrementally adding $Q$ to itself and testing the outcome. This is why it is essential to mention that $n$ has to be sufficiently large. If not an algorithm will increment and test $Q'=n'G$, till the relation $Q'=Q$ is satisfied.
 
 ## Elliptic-curve Diffie–Hellman Assumption (ECDH)
 ECDH is built on top of the ECDLP and assumes that:
@@ -150,37 +180,40 @@ For example:
 
 For disambiguation recall that:
   - $(a \times b)G = a(bG) = b(aG)$ (see above), 
-  - $a, b \in \mathbb{Z_q}$, results to $(a \times b) \in \mathbb{Z_q}$, as $\mathbb{Z_q}$ is a field, so $(a \times b)G$ is an element of $\mathbb{E}$,
-  - it easy to compute $(a+b)G = aG \circ bG$, as it is an EC point addition operation.
+  - $a, b \in \mathbb{Z_q}$, results to $(a \times b) \in \mathbb{Z_q}$, as $\mathbb{Z_q}$ is a field, so $(a \times b)G$ is an element of $\mathbb{E}_{(\mathbb{Z_q})}$,
+  - it easy to compute $(a+b)G = aG \circ bG$, as it is simply a point addition operation.
 
-Knowing $aG$ and $bG$, any other party will have to compute $a$ from $aG$ or $b$ from $bG$ to gain access to a computation of $a(bG) \text{ or } b(aG)$. Recall that the ability to ciompute $(a+b)G = aG + bG$ discloses no information on the values of $a, b \text{ or } (a \times b) \text{ or } (a + b)$.
+Knowing $aG$ and $bG$, any other party will have to compute $a$ from $aG$ or $b$ from $bG$ to gain access to a computation of $a(bG) \text{ or } b(aG)$. Recall that the ability to compute $(a+b)G = aG + bG$ discloses no information on the values of $a, b \text{ or } (a \times b) \text{ or } (a + b)$.
 
 ## N-Parties ECDH
-Recall that ECDH can be extended to run among $n$ parties with $n-1$ communication rounds. E.g.: $aG, bG, cG$ are sent around. Then $(a \times b)G, (b \times c)G, (a \times c)G$ are sent arround. Finally all parties can compute $(a \times b \times c)G$.
+ECDH can be extended to run among $n$ parties with $n-1$ communication rounds. E.g.: $aG, bG, cG$ are sent around. Then $(a \times b)G, (b \times c)G, (a \times c)G$ are sent arround. Finally all parties can compute $(a \times b \times c)G$.
 
 # Elliptic-Curve Domain Parameter
 EcDSA, EdDSA (all valiants of [DSA](https://en.wikipedia.org/wiki/Digital_Signature_Algorithm)), some other Schnorr signatures (like BIP340), are all built on top of ECDLP.
 
-They are all based on the family of [cyclic finite elliptic-curve groups](./cha.md#finite-groups-over-elliptic-curve) $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, O, G, p)$, where:
-- $\mathbb{E}_{(\mathbb{Z_q})}$ represent a set of points $P=(x_p, y_p)$ on the elliptic curve $E(x,y)$,
-- $\circ$ is the points addition operation, including the additive inverse and the neutral element $O$ (point at infinity), 
-- $G$ is the generator point, all points of the group can be computed by multiplying this point by a scalar number $n \in \mathbb{Z_q}$,
+They are all based on the family of [finite cyclic elliptic-curve groups](./cha.md#finite-groups-over-elliptic-curve) $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, O, G, p)$, where:
+- $\mathbb{E}_{(\mathbb{Z_q})}$ represent a set of points $P=(x_P, y_P)$ on the elliptic curve $E(x,y)$,
+- $\circ$ is the points addition operation, including the additive inverse and the identity element $O$ (point at infinity), 
+- $G$ is the generator point, meaning that all points of the group can be computed by multiplying this point by a scalar number $n \in \mathbb{Z_q}$,
 - $\mathbb{Z_q}$ is the field of order $q \in \mathbb{Z}$, such that $\forall_{P=(x,y)}, \forall_{Q=nP}, x, y, n \in \mathbb{Z_q}$. This means all point coordinates and all scalar numbers used to produced group elements are element of $\mathbb{Z_q}$,
-- $p$ is the order of the generator $G$, or the number of points so that $\forall_{n \in \mathbb{Z_q}}, nG \in \mathbb{E}$.
+- $p$ is the order of the generator $G$, or the number of points so that $\forall_{n \in \mathbb{Z_q}}, nG \in (\mathbb{E}_{(\mathbb{Z_q})}$.
 
 For the construction of cryptographic primitives, special secure curves have to be defined. Elliptic-curve construction distinguishes between prime case and binary case curves.
 
 ## Binary Case Elliptic-Curves
-In the binary case, the family of elliptic-curve groups $(\mathbb{E}_{(\mathbb{F_{2^m}})}, \circ, O, G, n)$ can be defined using the notation $(m,f,a,b,G,n,h)$ where:
+In the binary case, curves parameters for the family of elliptic-curve groups $(\mathbb{E}_{(\mathbb{F_{2^m}})}, \circ, O, G, n)$ can be defined using the notation $(m,f,a,b,G,n,h)$ where:
 - $m$ is the extension of the field $\mathbb{F_{2^m}}$. E.g $\mathbb{F_{2^8}}$ or $\mathbb{F_{256}}$ is used to implement AES,
-- $f$ is the auxiliary curve, and
-- other parameters have a similar definition to primary case curves bellow.
+- $f$ is the auxiliary curve,
+- $\mathbb{Z_{2^m}}$ is the field of order $2^m$, such that $\forall_{T=(x_T,y_T)}, \forall_{Q=nT=(x_Q, y_Q)}, x_T, y_T, n, x_Q, y_Q \in \mathbb{Z_p}$,
+- $a, b$ are the parameters of the curve equation $y^2= x^3 + ax + b$ (equation written in Weierstrass form),
+- $G$ is the generator point,
+- $n$ is the order of the point $G$, meaning that the smallest number $k \in \mathbb{Z_{2^m}}$ such that $kG = O$.
 
 ## Prime Case Elliptic-Curves
 In the prime case, the elliptic-curve group $(\mathbb{E}_{(\mathbb{Z_p})}, \circ, O, G, n)$ can be defined using the notation $(p,a,b,G,n,h)$ where:
 - $p$ is a large prime and the order of the field $\mathbb{Z_p}$ (number of elements in $\mathbb{Z_p} \texttt{ or } |\mathbb{Z_p}|$),
 - $\mathbb{Z_p}$ is the field of order $p \in \mathbb{Z}$, such that $\forall_{T=(x_T,y_T)}, \forall_{Q=nP=(x_Q, y_Q)}, x_T, y_T, n, x_Q, y_Q \in \mathbb{Z_p}$,
-- $a, b$ are the parameters of the curve equation $y^2= x^3 + ax + b$ (known as Weierstrass form),
+- $a, b$ are the parameters of the curve equation $y^2= x^3 + ax + b$ (equation written in Weierstrass form),
 - $G$ is the generator point,
 - $n$ is the order of the point $G$, meaning that the smallest number $k \in \mathbb{Z_p}$ such that $kG = O$,
 - $h$ the cofactor, given $h={1 \over n}|\mathbb{E_{(\mathbb{Z_p})}}|$. $h$ is used to limit subgroup of points on which to operate, for some security reasons e.g: [Pohlig–Hellman algorithm](https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm) on curve25519.
