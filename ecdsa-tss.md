@@ -13,12 +13,16 @@ without disclosing neither $k$ nor $a$ to a single party.
 We assume secret shares are generated according to the procedure defined in [computing the distributed secret polynomial](./dkg-tss.md#computing-a-distributed-secret-polynomial). At the end of the key generation process, each party $P_h, h \in H = \\{1, \dots, n\\}$ is in possession of a point $(x_h, f(x_h))$ on the distributed secret polynomial $f(x)$. The value $a_h=f(x_h)$ is called the secret share of $P_h$ and is known only to $P_h$.
 
 ## Interpolation of Individual Shares of $w_c$
-As soon as we know the set of participants $C=\\{1, \dots, t+1\\} \subset H$, involved into the distributed computation, each $P_c$ can interpolate their share $a_c$ into $t+1$ additive parts $w_c$ of distributed secret $a$ such that $a = \sum_{c=1}^{t+1}w_c$. This is done in detail in [retrieving the secret](./dkg-tss.md#retrieving-the-secret).
+As soon as we know the set of participants $C=\\{1, \dots, t+1\\} \subset H$, involved into the distributed computation, each $P_c$ can interpolate their share $a_c$ into $t+1$ additive parts $w_c$ of distributed secret $a$ such that 
+
+$$a = \sum_{c=1}^{t+1}w_c$$
+
+This is done in detail in [retrieving the secret](./dkg-tss.md#retrieving-the-secret).
 
 Remark that we are using the symbol $a$ to represent the secret instead of $s$, as the last one is used in the page to reference the signature.
 
 ## Distributed Computation
-The TSS challenge consists in coordinating a distributed computation among members of subset $C = \{1, \dots, t+1\} \subset H$, to jointly produce the signature
+The TSS challenge consists in coordinating a distributed computation among members of subset $C = \\{1, \dots, t+1\\} \subset H$, to jointly produce the signature
 
 $$
 \begin{aligned}
@@ -37,7 +41,9 @@ so that
 $$
 k = \sum_{c \in C}k_c \texttt{ and } (k \times a)= \sum_{c \in C}\sigma_c
 $$
+
 leading to
+
 $$
 \begin{aligned}
 s &= \sum_{c \in C}s_c=\sum_{c \in C}(k_c \times m + r \times \sigma_c)
@@ -51,6 +57,7 @@ s &= m \times k + (r\times k \times a)
 s &= k \times (m + (r \times a))
 \end{aligned}
 $$
+
 The aggregation of the individual signatures $s_c$ is therefore equivalent to a complete signature performed with the secret key $a$.
 
 ## Generation of Random Parameter (k)
