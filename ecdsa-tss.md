@@ -98,13 +98,13 @@ k\gamma = \sum_{c \in C}k_c * \sum_{c \in C}\gamma_c = \sum_{c,h \in C}k_c\gamma
 $$
 
 # Production of Secret $a$
-## Individual Shares of Secret (w_c)
+## Individual Shares of Secret $w_c$
 Using the polynomial interpolation, each party $P_c, c \in C$ computes an [additive share](./dkg.md#retrieving-the-secret) $w_c$ such that
 
 $$a = \sum_{c=1}^{t+1}w_c$$
 
 Even though we can collaboratively compute $a$, we do not want to have $a$ aggregated in a single process space. Further, the value we need in the ECDSA signature is the product $(k \times a)$
-## Additive Shares of masked Secret (kS)
+## Additive Shares of masked Secret ($k \times a$)
 Recall that
 $$
 a=\sum_{c \in C}w_c
