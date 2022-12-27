@@ -153,7 +153,7 @@ $$f(x)=\sum_{h=1}^nf_h(x)$$
 
 The distributed secret, that is not known to any single party is
 
-$$s \equiv f(x_s)=\sum_{h=1}^nf_h(x_s)$$
+$$s \equiv f(x_p)=\sum_{h=1}^nf_h(x_p)$$
 
 The distributed secret $s$ will never need to be computed in a single address space. In order to sign a contract, we need to find $t+1$ parties $\\{P_1, \dots, P_{t+1}\\}$ out of $n$ which will use their respective secret shares $\{(x_1, s_1), \dots, (x_{t+1}, s_{t+1})\}$ to perform the distributed computation.
 
