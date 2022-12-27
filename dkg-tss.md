@@ -145,7 +145,7 @@ where $t=k-1$, and $t$ is the signature threshold. This is done through the sele
 - each $P_h$ proceeds with a $t$ of $n$ sharing of the generated secret polynomial $f_h(x)$. The result is a list of points $(x_m, f_{h}(x_m))$ or $(x_m, s_{hm})$, where $\forall_{m \in H}, s_{hm}$ is the share to be sent by party $P_h$ to party $P_m$.
 - each party $P_m$ after receiving all shares $s_{hm}$ can compute it's secret share 
 
-$$s_m=\sum_{h=1}^ns_{hm}$$
+$$s_m=\sum_{h=1}^ns_{hm} \equiv f(x_m)$$
 
 The distributed secret polynomial $f(x)$ ends up being the sum of individual secret polynomials $f_h(x)$, presented as
 
@@ -160,7 +160,7 @@ The distributed secret $s$ will never need to be computed in a single address sp
 ## Retrieving the Secret
 The distributed secret polynomial is not intended to be recovered as a whole, but to be used in multi party computation. This means parties $P_h, h \in H$ will collaborate with each other to produce a computation that consumes $s$ without any party disclosing its secret share $s_h$ to other parties.
 
-As soon as we know the set of participants $C=\\{1, \dots, t+1\\}$, involved into the distributed computation, each party $P_h, h \in H$ member of $C$ can be called $P_c, c \in C$ and per consequence $s_h \equiv s_c$.
+As soon as we know the set of participants $C=\\{1, \dots, t+1\\}$, involved into the distributed computation, each party $P_h, h \in H$ member of $C$ can be called $P_c, c \in C$ and per consequence $s_h \equiv s_c = f(x_c)$. This is the additive secret share held by party $P_c$.
 
 As we can compute the lagrange coefficients for the $(t, t+1)$ secret sharing to be,
 
@@ -171,19 +171,19 @@ $$
 the distributed secret could theoretically be recovered with the formula
 
 $$
-f(x_p) = \sum_{c=1}^{t+1}(f_c(x_p) \times l_c(x_p))= \sum_{c=1}^{t+1}(s_c \times l_c(x_p))
+f(x_p) = \sum_{c=1}^{t+1}(f(x_c) \times l_c(x_p))= \sum_{c=1}^{t+1}(s_c \times l_c(x_p))
 $$
 
 Because $s_c$ is only known to party $P_c, c \in C$, none of the parties $P_c$ can compute $s = f(x_p)$ alone, even though each party $P_c$ is holding an additive share $w_c \text{ of } s$, where
 
 $$
-w_c = s_c \times l_c(x_s)
+w_c = s_c \times l_c(x_p)
 $$
 
 Because $w_c$ is the additive part of the distributed secret held by $P_c, c \in C$, the distributed secret is
 
 $$
-f(x_s) = \sum_{c=1}^{t+1}w_c
+f(x_p) = \sum_{c=1}^{t+1}w_c
 $$
 
 # Verifying the Integrity of Shares
