@@ -28,7 +28,7 @@ Reviewing the following is essential for the understanding of ECDSA maths below:
 ## ECDSA Signature
 Let $a \in_{rand} \mathbb{Z_q}$ be the secret key, a random number uniformly sampled from the field $\mathbb{Z_q}$, the ECDSA signature is a pair $(s,r) \in \mathbb{Z^2_q}$ where:
 - $r$ represents the coordinate $x_R$ of the public image $R = ({1 \over k}G)$ of a random parameter $k \in_{rand} \mathbb{Z_q}$. Random $k$ is used to mask the secret key,
-- $s$ is the signature, computed with the formula $s = k(m+ (r \times a))$, where $m=\Eta (M)$ and $\Eta : M \rightarrow \mathbb{Z_q}$ is a hash function used to embed the message $M$ into an element $m \in \mathbb{Z_q}$, or in short, into a number.
+- $s$ is the signature, computed with the formula $s = k(m+ (r \times a))$, where $m=H (M)$ and $H : M \rightarrow \mathbb{Z_q}$ is a hash function used to embed the message $M$ into an element $m \in \mathbb{Z_q}$, or in short, into a number.
 
 Key implementation observations:
 - A new random value $k$ must be chosen if $r=0 \texttt{ or }s = 0$.
@@ -83,9 +83,9 @@ A signature validation will further require to:
 - validate $|m| \le |p|$. The value of $m$ can be higher than $p$, but the length of $m$ in bits can not be longer than the size of $p$ in bits. Therefore $m$ is the $l_p$ most significant bits of H(M). Where $l_p = |p|$, is the length of $p$ in bits.
 
 ## Recovering the Public Key A
-In the case of public ledgers like bitcoin, the public key $A$ must not be known, but an image or precisely address $\alpha = \Eta'(A)$ is registered with the ledger. For bitcoin $\Eta'$ is the combined hash algorithm SHA256_RIPMD160.
+In the case of public ledgers like bitcoin, the public key $A$ must not be known, but an image or precisely address $\alpha = H'(A)$ is registered with the ledger. For bitcoin $H'$ is the combined hash algorithm SHA256_RIPMD160.
 
-Knowing the signature information $(r, s)$ and the message $M \rightarrow \Eta(M)=m$, we can compute the public key proceeding like:
+Knowing the signature information $(r, s)$ and the message $M \rightarrow H(M)=m$, we can compute the public key proceeding like:
 - verify that $r \ne 0 \texttt{ and } s \ne 0$
 - verify that $r,s \in \mathbb{Z_q}$ and $1 \lt r,s \lt q$
 - compute $u_1 = {m \over r}$ and $u_2 = {s \over r}$
