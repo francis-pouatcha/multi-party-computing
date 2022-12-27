@@ -133,7 +133,7 @@ $$
 ## Finite Groups over Elliptic-Curve
 With the addition operation and the additive inverse defined above, the ECA allows the construction of finite groups over elements of an elliptic curve. Meaning the ECA allows the construction of the relation $\mathbb{Z}_{q}$ x $\mathbb{E} \implies \mathbb{E}$, where for a point $P \in \mathbb{E}$ and a number $n \in \mathbb{Z}_{q}$, the point $Q=nP \in \mathbb{E}$ can be generated, where $\mathbb{Z}_{q}$ is a finite field $(\mathbb{Z}, +, \times, q)$ of order $q$.
 
-Therefore, from a generator point $G$, ECA allows the construction of finite cyclic groups on an elliptic curve $(\mathbb{E}_{(\mathbb{Z}_{q})}, \circ, O, G, p)$, where
+Therefore, from a generator point $G$, ECA allows the construction of finite cyclic groups on an elliptic curve $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$, where
 - $\circ$ is the points addition operation defined above, including the additive inverse and the identity element at $O$,
 - $G$ is the generator point,
 - $p$ is the order of the group generator $G$, or the number of points on curve $\mathbb{E}$ that can be generated from $G$,
@@ -158,7 +158,7 @@ This detail level is essential for the clean understanding of resulting hardness
 
 # EC based Hardness Assumption
 ## Elliptic-Curve Discrete Log Problem (ECDLP)
-Working on the cyclic, finite elliptic-curve group $(\mathbb{E}_{(\mathbb{Z}_{q})}, \circ, O, G, p)$, and given a point $Q \in \mathbb{E}$, it is hard to find the __sufficiently large__ number $n$ such that $Q=nG$. This means it is hard to compute how many times we have to add the point $G$ to itself to get to the point $Q$.
+Working on the cyclic, finite elliptic-curve group $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$, and given a point $Q \in \mathbb{E}$, it is hard to find the __sufficiently large__ number $n$ such that $Q=nG$. This means it is hard to compute how many times we have to add the point $G$ to itself to get to the point $Q$.
 
 Following integer arithmetic, we would say $G = (n^{-1}) Q = mQ$ where $m=n^{-1} \in \mathbb{Z}_{q}$. Recall that $n^{-1}$ is an integer number, as it is the multiplicative inverse of $n$ in $\mathbb{Z}_{q}$.
 
@@ -166,7 +166,7 @@ If $n$ is unknown, there is no easy way to find $m$ without just incrementally a
 
 ## Elliptic-curve Diffie–Hellman Assumption (ECDH)
 ECDH is built on top of the ECDLP and assumes that:
-- given the group $(\mathbb{E}_{(\mathbb{Z}_{q})}, \circ, O, G, p)$, where $O$ is the identity element, and
+- given the group $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$, where $O$ is the identity element, and
 - given two group elements $aG$ and $bG$,
 - it is hard to compute $(a \times b)G$, without knowing either $a$ or $b$.
 
@@ -179,7 +179,7 @@ For example:
 
 For disambiguation recall that:
 - $(a \times b)G = a(bG) = b(aG)$ (see above),
-- $a, b \in \mathbb{Z}_{q}$, results to $(a \times b) \in \mathbb{Z}_{q}$, as $\mathbb{Z}_{q}$ is a field, so $(a \times b)G$ is an element of $\mathbb{E}_{(\mathbb{Z}_{q})}$,
+- $a, b \in \mathbb{Z}_{q}$, results to $(a \times b) \in \mathbb{Z}_{q}$, as $\mathbb{Z}_{q}$ is a field, so $(a \times b)G$ is an element of $\mathbb{E_{(\mathbb{Z_q})}}$,
 - it is easy to compute $(a+b)G = aG \circ bG$, as it is simply a point addition operation.
 
 Knowing $aG$ and $bG$, any other party will have to compute $a$ from $aG$ or $b$ from $bG$ to gain access to a computation of $a(bG) \text{ or } b(aG)$. Recall that the ability to compute $(a+b)G = aG + bG$ discloses no information on the values of $a, b \text{ or } (a \times b) \text{ or } (a + b)$.
@@ -190,12 +190,12 @@ ECDH can be extended to run among $n$ parties with $n-1$ communication rounds. E
 # Elliptic-Curve Domain Parameter
 EcDSA, EdDSA (all valiants of [DSA](https://en.wikipedia.org/wiki/Digital_Signature_Algorithm)), some other Schnorr signatures (like BIP340), are all built on top of ECDLP.
 
-They are all based on the family of [finite cyclic elliptic-curve groups](./cha.md#finite-groups-over-elliptic-curve) $(\mathbb{E}_{(\mathbb{Z}_{q})}, \circ, O, G, p)$, where:
-- $\mathbb{E}_{(\mathbb{Z}_{q})}$ represent a set of points $P=(x_P, y_P)$ on the elliptic curve $E(x,y)$,
+They are all based on the family of [finite cyclic elliptic-curve groups](./cha.md#finite-groups-over-elliptic-curve) $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$, where:
+- $\mathbb{E_{(\mathbb{Z_q})}}$ represent a set of points $P=(x_P, y_P)$ on the elliptic curve $E(x,y)$,
 - $\circ$ is the points addition operation, including the additive inverse and the identity element $O$ (point at infinity),
 - $G$ is the generator point, meaning that all points of the group can be computed by multiplying this point by a scalar number $n \in \mathbb{Z}_{q}$,
 - $\mathbb{Z}_{q}$ is the field of order $q \in \mathbb{Z}$, such that $\forall_{P=(x,y)}, \forall_{Q=nP}, x, y, n \in \mathbb{Z}_{q}$. This means all point coordinates and all scalar numbers used to produced group elements are element of $\mathbb{Z}_{q}$,
-- $p$ is the order of the generator $G$, or the number of points so that $\forall_{n \in \mathbb{Z}_{q}}, nG \in (\mathbb{E}_{(\mathbb{Z}_{q})}$.
+- $p$ is the order of the generator $G$, or the number of points so that $\forall_{n \in \mathbb{Z}_{q}}, nG \in (\mathbb{E_{(\mathbb{Z_q})}}$.
 
 For the construction of cryptographic primitives, special secure curves have to be defined. Elliptic-curve construction distinguishes between prime case and binary case curves.
 
@@ -209,7 +209,7 @@ In the binary case, curves parameters for the family of elliptic-curve groups $(
 - $n$ is the order of the point $G$, meaning that the smallest number $k \in \mathbb{Z_{2^m}}$ such that $kG = O$.
 
 ## Prime Case Elliptic-Curves
-In the prime case, the elliptic-curve group $(\mathbb{E}_{(\mathbb{Z}_{p})}, \circ, O, G, n)$ can be defined using the notation $(p,a,b,G,n,h)$ where:
+In the prime case, the elliptic-curve group $(\mathbb{E_{(\mathbb{Z_p})}}, \circ, O, G, n)$ can be defined using the notation $(p,a,b,G,n,h)$ where:
 - $p$ is a large prime and the order of the field $\mathbb{Z}_{p}$ (number of elements in $\mathbb{Z}_{p} \texttt{ or } |\mathbb{Z}_{p}|$),
 - $\mathbb{Z}_{p}$ is the field of order $p \in \mathbb{Z}$, such that $\forall_{T=(x_T,y_T)}, \forall_{Q=nP=(x_Q, y_Q)}, x_T, y_T, n, x_Q, y_Q \in \mathbb{Z}_{p}$,
 - $a, b$ are the parameters of the curve equation $y^2= x^3 + ax + b$ (equation written in Weierstrass form),

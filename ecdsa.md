@@ -4,7 +4,7 @@ ECDSA specifies the use of [elliptic curves](./ecgroups.md) for the construction
 
 Let the expression $\mathbb{Z}_{q}$ represent the field of integers modulo $q$ written $(\mathbb{Z}, +, \times, q)$.
 
-Let the expression $\mathbb{E}_{(\mathbb{Z}_{q})}$ represent an [elliptic-curve group](./ecgroups.md) $(\mathbb{E}_{(\mathbb{Z}_{q})}, \circ, O, G, p)$, defined over $\mathbb{Z}_{q}$ where
+Let the expression $\mathbb{E_{(\mathbb{Z_q})}}$ represent an [elliptic-curve group](./ecgroups.md) $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$, defined over $\mathbb{Z}_{q}$ where
 - $\circ$ is the binary group operation, a.k.a addition of points,
 - O is the identity element, a.k.a neutral element
 - $G$ is the generator of the group,
@@ -12,16 +12,16 @@ Let the expression $\mathbb{E}_{(\mathbb{Z}_{q})}$ represent an [elliptic-curve 
 
 Reviewing the following is essential for the understanding of ECDSA maths below:
 - Elements of $\mathbb{Z}_{q}$ are integer numbers and always written using small letters, e.g.: $a, r$.
-- Elements of $\mathbb{E}_{(\mathbb{Z}_{q})}$ are points on the curve and always written using capital letters. e.g.: $G, A, R$, where $x_R, y_R$ are integer coordinates of the point $R$. Point coordinates $x_R, y_R$ are also elements of $\mathbb{Z}_{q}$.
+- Elements of $\mathbb{E_{(\mathbb{Z_q})}}$ are points on the curve and always written using capital letters. e.g.: $G, A, R$, where $x_R, y_R$ are integer coordinates of the point $R$. Point coordinates $x_R, y_R$ are also elements of $\mathbb{Z}_{q}$.
 
 ### Operations in $(\mathbb{Z}, +, \times, q)$
 - the expression $a + b$ denotes the addition of two integers $a, b \in \mathbb{Z}_{q}$. They are always performed modulo $q$ even if omitted.
 - the expression $a \times b$ denotes the multiplication of two integers $a, b \in \mathbb{Z}_{q}$. They are always performed modulo $q$ even if omitted.
 
-### Operations in $(\mathbb{E}_{(\mathbb{Z}_{q})}, \circ, O, G, p)$
+### Operations in $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$
 - $A \circ B$ denotes the addition of two points $A=(x_A, y_A) \text{ and } B=(x_B, y_B)$, both $A, B \in \mathbb{E}$. Operations on points coordinates $x_A, y_A, x_B, y_B$ are performed in $\mathbb{Z}_{q}$, which means modulo $q$.
 - $nA$ is the $n$-times addition of the point $A$ to itself. Means $nA=O \circ_1 A \circ_2 A \dots \circ_n A$. This is called the scalar multiplication of the point $A \in \mathbb{E}$ by the integer $n \in \mathbb{Z}_{q}$.
-- Recall that on $\mathbb{E}_{(\mathbb{Z}_{q})}$, following applies:
+- Recall that on $\mathbb{E_{(\mathbb{Z_q})}}$, following applies:
 - $aG \circ bG = (a + b)G$
 - $a (bG) = (a \times b)G$
 
@@ -51,7 +51,7 @@ $$
 \\
 &\text{operations above are in } \mathbb{Z}_{q}
 \\
-&\text{operations bellow are in } \mathbb{E}_{(\mathbb{Z}_{q})}
+&\text{operations bellow are in } \mathbb{E_{(\mathbb{Z_q})}}
 \\
 &R' = {1 \over k}G = ({m \over s} + {(r \times a) \over s})G
 \\
@@ -67,7 +67,7 @@ $$
 \end{aligned}
 $$
 
-As you can observe, the computation of the signature $s$ happens in $\mathbb{Zq}$ but the verification is done performing point operations in $\mathbb{E}_{(\mathbb{Z}_{q})}$. This means elliptic curves can allow the verification of the linear constraint $a = ((s \times k^{-1}) - m) \times r^{-1}$ by checking the same constraint on public images in $\mathbb{E}_{(\mathbb{Z}_{q})}$. The only information not available is the secret number $a$, but we have its public image $A=aG$.
+As you can observe, the computation of the signature $s$ happens in $\mathbb{Zq}$ but the verification is done performing point operations in $\mathbb{E_{(\mathbb{Z_q})}}$. This means elliptic curves can allow the verification of the linear constraint $a = ((s \times k^{-1}) - m) \times r^{-1}$ by checking the same constraint on public images in $\mathbb{E_{(\mathbb{Z_q})}}$. The only information not available is the secret number $a$, but we have its public image $A=aG$.
 
 The signature is valid if $r = x_{R'}$ and the following validation test are positive.
 
