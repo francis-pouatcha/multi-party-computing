@@ -158,6 +158,7 @@ The value of $r$ is the $x$-coordinate of the point $R$, represented as: $$r=x_R
 Each party $P_c$ computes and broadcasts the public image of $\sigma_c$ in the form of $\Gamma_c=\sigma_cR$.
 
 Upon reception of all pieces, each party can recompute the public key:
+
 $$
 A= \sum_{c \in C} \Gamma_c = (\sum_{c \in C}\sigma_c)R=(k \times a)(R)=(k \times a)({1 \over k}G)={(k \times a) \over k}G=aG
 $$
@@ -167,6 +168,7 @@ Each party $P_c$ computes and broadcasts the additive signature
 $$s_c=m \times k_c + r \times \sigma_c$$
 
 Upon receiving all signature shares, each party can compute the aggregate signature:
+
 $$
 \begin{aligned}
 s &= \sum_{c \in C}s_c
