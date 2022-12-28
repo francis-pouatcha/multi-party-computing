@@ -44,7 +44,7 @@ Constructing the child key:
 - $z_{hR<(o:le):32>} = z_{h<(o):64:[32:]>}$, we take the last $32$ octets of $z_h$,
 - $a_{child:i} = (8 \times z_{hL}) + a_{parent}$
 - $r_{child:i} = z_{hR} + r_{parent } \pmod {2^{256}}$
-- $ A_{child:i} = a_{child:i}G$
+- $A_{child:i} = a_{child:i}G$
 
 The resulting extended key for child $i$ is the tuple: $(a_{child:i},r_{child:i},c_{child:i})$
 
