@@ -77,7 +77,7 @@ Constructing the child key:
 - $z_{nR<(o:le):32>} = z_{n<(o):64:[32:]>}$, we take the last $32$ octets of $z_n$,
 - $a_{child:i} = (8 \times z_{nL}) + a_{parent}$
 - $r_{child:i} = z_{nR} + r_{parent} \pmod {2^{256}}$
-- $ A_{child:i} = a_{child:i}G$, if $a_{child:i}$ available, or
+- $A_{child:i} = a_{child:i}G$, if $a_{child:i}$ available, or
 - $A_{child:i} = A_{parent} \circ (8 \times z_{nL})G$
 
 The resulting extended key for child $i$ is the tuple: $(a_{child:i},r_{child:i},c_{child:i})$
