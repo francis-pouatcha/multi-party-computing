@@ -5,38 +5,38 @@
 ## Extended Key
 Given an [elliptic-curve group](./ecgroups.md#elliptic-curves-ec) $(\mathbb{E}_{(\mathbb{Z_q})}, \circ, O, G, p)$, an extended key is a keypair with following properties:
 - the extended private key is a pair $(a,c) \in \mathbb{Z^2_q}$ where
-- a is the normal private key
-- c is the chain code
+  - a is the regular private key
+  - c is the chain code
 - the extended public key is the pair $(A, c) \in \mathbb{E} \times \mathbb{Z_q}$, where
-- $A = aG$ is the normal public key, and
-- c the chain code.
+  - $A = aG$ is the regular public key, and
+  - c the chain code.
 
 Each extended key has :
-- $2^{31}$ normal child keys, and
+- $2^{31}$ neutered child keys, and
 - $2^{31}$ hardened child keys.
 
 Each of these child keys has an index:
-- the normal child keys use indices $[0, \dots, 2^{31}-1]$,
+- the neutered child keys use indices $[0, \dots, 2^{31}-1]$,
 - the hardened child keys use indices $[2^{31}, \dots, 2^{32}-1]$
 
 To ease notation for hardened key indices, we use the representation $i_H = i+2^{31}$
 
-Definitions of string as used here are found in [strings expressions](./conv-ser-enc.md).
+The definition of bit and byte strings as used here is found in [strings expressions](./conv-ser-enc.md).
 
 ## Hardened Derivation
 
 A hardened derivation is only permitted for $i_{child} \ge 2^{31}$. It uses the parent private key bytes to produce the new random number. The key derivation function $HM_{<(b):512>} \equiv \text{HMAC-SHA512}$ produces a $512$ bit string using the following function:
 
-$$z_{h<(b):512>} = HM_{<(b):512>}(c_{parent<(o:be):32>} || \text{0x00}_{<(o):1>} || a_{parent<(o:be):256:} || i_{child<(o:be):4>})$$
+$$z_{h<(b):512>} = HM_{<(b):512>}(c_{parent<(o:be):32>} || \text{0x00}_{<(o):1>} || a_{parent<(o:be):32:} || i_{child<(o:be):4>})$$
 
 Where
 - $c_{parent<(o:be):32>}$ is the $32$ octets big endian representation of the parent chain code,
-- $\text{0x00}_{<(o):1>}$ is a one octet padding used to achieve the same input length like normal key derivation on public keys,
-- $a_{parent<(o:be):256>}$ is the $32$ octet big endian representation of the parent private key, and
+- $\text{0x00}_{<(o):1>}$ is a one octet padding used to achieve the same input length like neutered key derivation on public keys,
+- $a_{parent<(o:be):32>}$ is the $32$ octet big endian representation of the parent private key, and
 - $i_{child<(o:be):4>}$ is the $4$ octets big endian representation of the child index. Recall $i_{child} \ge 2^{31}$ for hardened derivation.
 
 The resulting bit string $z_{h<(b):512>}$ is divided into two, $z_{hL}$ and $z_{hR}$ such that:
-- $n_{priv:i<(o:be):32>} = z_{hL} = z_{h<(b):512:[:255]>}$ is the child's random number from the parent private key. $z_{h<(b):512:[:255]>}$ selects the first $256$ bits of the string. Those are reorganized into a $32$-octet string in big endian byte order and read as a $32$ bytes integer.
+- $n_{priv:i<(o:be):32>} = z_{hL} = z_{h<(b):512:[:255]>}$ is the child's random number from the parent private key. $z_{h<(b):512:[:255]>}$ selects the first $256$ bits of the string. Those are reorganized into a $32$-octets string in big endian byte order and read as a $32$ bytes integer.
 - $a_{child:i} \equiv n_{priv:i} + a_{parent} \pmod q$, this random number is added to the parent private key to form the child's private key,
 - $c_{child:i<(o:be):32>} = z_{hR} = z_{h<(b):512:[256:]>}$ is the child's chain code
 - $A_{child:i} = a_{child:i}G$, is the child's public key.
@@ -64,27 +64,27 @@ The resulting bit string $z_{n<(b):512>}$ is splitted into two, $z_{nL}$ and $z_
 - $c_{child:i<(o:be):32>} = z_{nR} = z_{n<(b):512:[256:]>}$ is the child's chain code
 
 When this computation is performed by the holder of the parent private key, the child private key can also be computed with
-- $a_{child} = n_{pub} + a_{parent}$.
+- $a_{child:i} = n_{pub:i} + a_{parent}$.
 
 This procedure works because:
 
 $$
 \begin{aligned}
-A_{child} &= n_{pub}G \circ a_{parent}G
+A_{child:i} &= n_{pub:i}G \circ a_{parent}G
 \\
-A_{child} &= (n_{pub} + a_{parent})G
+A_{child:i} &= (n_{pub:i} + a_{parent})G
 \\
-A_{child} &= a_{child}G
+A_{child:i} &= a_{child:i}G
 \end{aligned}
 $$
 
-This works as the [curve arithmetic](./ecgroups.md#finite-groups-over-elliptic-curve) allows $(a + b)G \equiv aG \circ bG$
+Recall the [curve arithmetic](./ecgroups.md#finite-groups-over-elliptic-curve) allows $(a + b)G \equiv aG \circ bG$
 
 ### Output Validation
 
 In case :
-- $n_{pub} \ge q$ or
-- $A_{child} = O$ (Identity element)
+- $n_{pub:i} \ge q$ or
+- $A_{child:i} = O$ (Identity element)
 
 the resulting key is invalid, and one should proceed with the next value for $i_{child}$. (Note: this has probability lower than $1 \text{ in } 2^{127}$)
 
