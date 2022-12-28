@@ -30,15 +30,15 @@ A hardened derivation is only permitted for $i_{child} \ge 2^{31}$. It uses the 
 $$z_{h<(b):512>} = HM_{<(b):512>}(c_{parent<(o:be):32>} || \text{0x00}_{<(o):1>} || a_{parent<(o:be):256:} || i_{child<(o:be):4>})$$
 
 Where
-- $c_{parent<o(be):32>}$ is the $32$ octets big endian representation of the parent chain code,
-- $\text{0x00}_{<o:1>}$ is a one octet padding used to achieve the same input length like normal key derivation on public keys,
-- $a_{parent<(be):256>}$ is the $32$ octet big endian representation of the parent private key, and
-- $i_{child<o(be):4>}$ is the $4$ octets big endian representation of the child index. Recall $i_{child} \ge 2^{31}$ for hardened derivation.
+- $c_{parent<(o:be):32>}$ is the $32$ octets big endian representation of the parent chain code,
+- $\text{0x00}_{<(o):1>}$ is a one octet padding used to achieve the same input length like normal key derivation on public keys,
+- $a_{parent<(o:be):256>}$ is the $32$ octet big endian representation of the parent private key, and
+- $i_{child<(o:be):4>}$ is the $4$ octets big endian representation of the child index. Recall $i_{child} \ge 2^{31}$ for hardened derivation.
 
-The resulting bit string $z_{h<b:512>}$ is divided into two, $z_{hL}$ and $z_{hR}$ such that:
-- $n_{priv:i<o(be):32>} = z_{hL} = z_{h<b:512:[:255]>}$ is the child's random number from the parent private key. $z_{h<b[:255]>}$ selects the first $256$ bits of the string. Those are reorganized into a $32$-octet string in big endian byte order and read as a $32$ bytes integer.
+The resulting bit string $z_{h<(b):512>}$ is divided into two, $z_{hL}$ and $z_{hR}$ such that:
+- $n_{priv:i<(o:be):32>} = z_{hL} = z_{h<(b):512:[:255]>}$ is the child's random number from the parent private key. $z_{h<(b):512:[:255]>}$ selects the first $256$ bits of the string. Those are reorganized into a $32$-octet string in big endian byte order and read as a $32$ bytes integer.
 - $a_{child:i} \equiv n_{priv:i} + a_{parent} \pmod q$, this random number is added to the parent private key to form the child's private key,
-- $c_{child:i<o(be):32>} = z_{hR} = z_{h<b:512:[256:]>}$ is the child's chain code
+- $c_{child:i<(o:be):32>} = z_{hR} = z_{h<(b):512:[256:]>}$ is the child's chain code
 - $A_{child:i} = a_{child:i}G$, is the child's public key.
 
 ### Output Validation
@@ -49,19 +49,19 @@ In case :
 the resulting key is invalid, and one should proceed with the next value for $i_{child}$. (Note: this has probability lower than $1 \text{ in } 2^{127}$)
 
 ## Neutered Derivation
-A neutered derivation is only permitted for $i_{child} \lt 2^{31}$. It uses the parent public key bytes to produce the new random number. The key derivation function $HM_{<b:512>}$ produces a $512$ bits string using the following function:
+A neutered derivation is only permitted for $i_{child} \lt 2^{31}$. It uses the parent public key bytes to produce the new random number. The key derivation function $HM_{<(b):512>}$ produces a $512$ bits string using the following function:
 
-$$z_{n<b:512>} = HM_{<b:512>}(c_{parent<o(be):32>} || A_{parent<(ec):33>} || i_{child<o(be):4>})$$
+$$z_{n<(b):512>} = HM_{<(b):512>}(c_{parent<(o:be):32>} || A_{parent<(o:ec):33>} || i_{child<(o:be):4>})$$
 
 Where
-- $c_{parent<o(be):32>}$ is the $32$ octets big endian representation of the parent chain code,
+- $c_{parent<(o:be):32>}$ is the $32$ octets big endian representation of the parent chain code,
 - $A_{parent<(ec):33>}$ is the $33$ octets compressed representation of the parent public key point. This is also known as elliptic curve point encoding (ec), and
-- $i_{child<o(be):4>}$ is the $4$ octets big endian representation of the child index. Recall $i_{child} \lt 2^{31}$ for neutered derivation.
+- $i_{child<(o:be):4>}$ is the $4$ octets big endian representation of the child index. Recall $i_{child} \lt 2^{31}$ for neutered derivation.
 
-The resulting bit string $z_{n<b:512>}$ is splitted into two, $z_{nL}$ and $z_{nR}$ such that:
-- $n_{pub:i<o(be):32>} = z_{nL} = z_{n<b:512:[:255]>}$ is the child's random number from the parent public key. $z_{n<[:255]>}$ selects the first $256$ bits of the string. Those are reorganized into a $32$-octet string in big endian byte order and read as a $32$ byte integer.
+The resulting bit string $z_{n<(b):512>}$ is splitted into two, $z_{nL}$ and $z_{nR}$ such that:
+- $n_{pub:i<(o:be):32>} = z_{nL} = z_{n<(b):512:[:255]>}$ is the child's random number from the parent public key. $z_{n<(b):512:[:255]>}$ selects the first $256$ bits of the string. Those are reorganized into a $32$-octet string in big endian byte order and read as a $32$ byte integer.
 - $A_{child:i} = n_{pub:i}G \circ A_{parent}$, is the child's public key. This is a simple point addition as the same random number is added to the parent private key to form the child's private key.
-- $c_{child:i<o(be):32>} = z_{nR} = z_{n<b:512:[256:]>}$ is the child's chain code
+- $c_{child:i<(o:be):32>} = z_{nR} = z_{n<(b):512:[256:]>}$ is the child's chain code
 
 When this computation is performed by the holder of the parent private key, the child private key can also be computed with
 - $a_{child} = n_{pub} + a_{parent}$.
