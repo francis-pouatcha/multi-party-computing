@@ -55,7 +55,7 @@ $$z_{n<(b):512>} = HM_{<(b):512>}(c_{parent<(o:be):32>} || A_{parent<(o:ec):33>}
 
 Where
 - $c_{parent<(o:be):32>}$ is the $32$ octets big endian representation of the parent chain code,
-- $A_{parent<(ec):33>}$ is the $33$ octets compressed representation of the parent public key point. This is also known as elliptic curve point encoding (ec), and
+- $A_{parent<(o:ec):33>}$ is the $33$ octets compressed representation of the parent public key point. This is also known as elliptic curve point encoding (ec), and
 - $i_{child<(o:be):4>}$ is the $4$ octets big endian representation of the child index. Recall $i_{child} \lt 2^{31}$ for neutered derivation.
 
 The resulting bit string $z_{n<(b):512>}$ is splitted into two, $z_{nL}$ and $z_{nR}$ such that:
@@ -67,6 +67,7 @@ When this computation is performed by the holder of the parent private key, the 
 - $a_{child} = n_{pub} + a_{parent}$.
 
 This procedure works because:
+
 $$
 \begin{aligned}
 A_{child} &= n_{pub}G \circ a_{parent}G

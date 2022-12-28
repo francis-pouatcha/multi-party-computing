@@ -1,15 +1,15 @@
 # Notation and Conventions
 All array indexing operations are zero based. We use following representation to indicate the nature of the string.
 
-$s_{<t(e):n:[i:j]>}$ where:
+$s_{<(t:e):n:[i:j]>}$ where:
 - $t$ indicates the type of the string element,
   - $b$ for bit
   - $o$ for octet
 - $(e)$ indicates the object type. This can be
-  - $P_{<(ec)>}$ an encoded ec point.
-  - $P_{<(ed)>}$ an encoded ed point.
-  - $n_{<o(le):32>}$ a $32$ octets little endian representation of the scalar number $n$.
-- $n$ describes the size of the string. e.g.: $s_{<b:512>}$
+  - $P_{<(o:ec):33>}$ an encoded ec point.
+  - $P_{<(o:ed):32>}$ an encoded ed point.
+  - $n_{<(o:le):32>}$ a $32$ octets little endian representation of the scalar number $n$.
+- $n$ describes the size of the string. e.g.: $s_{<(b):512>}$
 - $[i:j]$ indicate the selection. Zero based.
   - $[:j]$ means from zero to $j$ 
   - $[i:]$ means from $i$ to the end $n-1$
