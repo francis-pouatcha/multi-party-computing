@@ -1,7 +1,7 @@
 # ECDSA Signature
 ECDSA specifies the use of [elliptic curves](./ecgroups.md) for the construction of DSA signatures.
-## Elliptic Curves
 
+## Elliptic Curves
 Let the expression $\mathbb{Z_q}$ represent the field of integers modulo $q$ written $(\mathbb{Z}, +, \times, q)$.
 
 Let the expression $\mathbb{E_{(\mathbb{Z_q})}}$ represent an [elliptic-curve group](./ecgroups.md) $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$, defined over $\mathbb{Z_q}$ where
