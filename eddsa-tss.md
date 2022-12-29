@@ -1,6 +1,6 @@
 # EdDSA Signature
 
-EdDSA is a variant of the [Schnoor Signature](https://en.wikipedia.org/wiki/Schnorr_signature). EdDSA is standardized by the IETF in [RFC8032](https://www.rfc-editor.org/rfc/rfc8032). The most recomended instantiation is ed25519, which implements EdDSA on the twisted edwards curve edwards25519.
+EdDSA is a variant of the [Schnorr Signature](https://en.wikipedia.org/wiki/Schnorr_signature). EdDSA is standardized by the IETF in [RFC8032](https://www.rfc-editor.org/rfc/rfc8032). The most recomended instantiation is ed25519, which implements EdDSA on the twisted edwards curve edwards25519.
 
 ## Twisted Edwards Curves
 A twisted edwards curve is a twist of an [edwards curve](https://en.wikipedia.org/wiki/Edwards_curve). Of interest here is a twisted Edwards curve $\mathbb{E_{(F_q)}}$ over a field $\mathbb{F_q}$ with characteristic $char(\mathbb{F_q}) \ge 3$ and the equation:
