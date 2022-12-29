@@ -210,8 +210,6 @@ $$
 \end{aligned}
 $$
 
-
-
 # Schnorr n-of-n Multi Signature
 A signature aggregation scheme for Schnorr allows $n$-of-$n$ multi signatures which, from a verifier's perspective, are no different from ordinary signatures.
 
@@ -262,7 +260,7 @@ Each party can publish the signature string $\sigma_{<(o):65>} = R_{<(o:bip340):
 This protocol is vulnerable to a rogue-key attack where a corrupted signer reports its public key $A_n = A - \sum_{h=1}^{n-1}A_h$ to orchestrate the production of a preknown public key $A = aG$. The reporter will then be able to use a known private key $a$ to produce signatures without the collaboration of other parties. Details can be found [here](https://courses.csail.mit.edu/6.857/2020/projects/4-Elbahrawy-Lovejoy-Ouyang-Perez.pdf).
 
 ## BIP32 HD Keys for n-of-n
-Using [BIP32](./bip32.md) to produce deterministic $A_h$ and $R_h$ from the same pretested child key indexs will help parties prevent one of them to be malicious.
+Using [BIP32](./bip32.md) to produce deterministic $A_h$ and $R_h$ from the same pretested child key indexes will help parties prevent one of them to be malicious.
 
 Recall children key indexes might derive invalide keys, all parties agree upon idex ranges that are tested by all parties.
 
