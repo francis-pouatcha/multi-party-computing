@@ -11,7 +11,7 @@ For threshold ECDSA, we need a way to compute the signature $(r,s) \in \mathbb{Z
 
 without disclosing neither $k$ nor $a$ to a single party.
 
-Remark that we use $1 \over k$ to compute $R$ instead of $k$. We get the same result, as we use $k$ in the signature computation instead of $1 \over k$. But this approach increases the linearity of the signature computation and make additive sub-signatures easy to compute.
+Remark that we use $1 \over k$ to compute $R$ instead of $k$. We get the same result, as we use $k$ in the signature computation instead of $1 \over k$. But this approach increases the linearity of the signature computation and makes additive sub-signatures easy to compute.
 
 ## Computing Individual Secret Shares $a_h$
 We assume secret shares are generated according to the procedure defined in [computing the distributed secret polynomial](./dkg-tss.md#computing-a-distributed-secret-polynomial). At the end of the key generation process, each party $P_h, h \in H = \\{1, \dots, n\\}$ is in possession of a point $(x_h, f(x_h))$ on the distributed secret polynomial $f(x)$. The value $a_h=f(x_h)$ is called the secret share of $P_h$ and is only known to $P_h$.

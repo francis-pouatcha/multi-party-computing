@@ -59,6 +59,7 @@ is the string $\sigma_{<(o):65>} = R_{<(o:bip340):33>}||s_{<(o:be:32)>}$, where
 
 ## Verification
 A signature is verified by applying
+
 $$
 \begin{aligned}
 R \circ uA &= sG
@@ -186,7 +187,7 @@ This shows that verifying the membership of a single entry means verifying the v
 ### Verifying a known Membership
 The the prover can provide the signature $s_m$, and by verifying that $s_mG = R_m \circ u_mA_m$, we also verify that $s_m$ is included in the aggregated $\gamma$ with
 
-## Incremental Half Aggregated Signature
+## Incremental Aggregated Signature
 For the half aggregated signature described above, the aggregator has to wait for all signatures to present before starting with the aggregation process. Aggregating incrementally might save space and improve asynchronicity.
 
 Let
@@ -269,8 +270,10 @@ Recall children key indexes might derive invalide keys, all parties agree upon i
 ## Threshold Secret Sharing
 Threshold signature requires a $t$ of $n$ secret sharing scheme as defined in [DKG-TSS](./dkg-tss.md).
 
-## Threshold Schnorr
-Assume a group of $n$ signers $P_h, h \in H = \\{1, \dots, n\\}$, with the set $L = \\{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG\\}$ of their respective public keys. The common public key $A = \sum_{h=1}^n A_h$.
+## Threshold Signature
+Assume a group of $n$ signers $P_h, h \in H = \\{1, \dots, n\\}$, with the set $L = \\{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG\\}$ of their respective public keys. The common public key 
+
+$$A = \sum_{h=1}^n A_h$$
 
 ## Interpolation of Individual Shares of $w_c$
 As soon as we know the set of participants $C=\\{1, \dots, t+1\\} \subset H$, involved in the distributed computation, each $P_c$ interpolate its share $a_c \equiv f(x_c)$ into $t+1$ additive parts $w_c$ of the distributed secret $a$ such that
