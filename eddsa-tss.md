@@ -6,6 +6,7 @@ EdDSA is a variant of the [Schnorr Signature](https://en.wikipedia.org/wiki/Schn
 Let the expression $\mathbb{Z_{p^n}}$ represent the field of integers modulo $q$ written $(\mathbb{Z}, +, \times, q={c^n})$.
 
 A twisted edwards curve is a twist of an [edwards curve](https://en.wikipedia.org/wiki/Edwards_curve). Curves of interest here are the family of twisted edwards curves $E: \mathbb{Z_q} \rightarrow \mathbb{Z_q}$, meaning over a field $\mathbb{Z_q}$ with characteristic $char(\mathbb{Z_q}) \equiv c \ge 3$ and the equation:
+
 $$
 E_{TEd}(y,x) : ax^2 + y^2 = 1 + dx^2y^2
 $$
@@ -47,11 +48,11 @@ EdDSA points are encoded in the format:
   - $o$ stands for octet string
   - $le$ stands for little endian bytes order
   - $32$ is the size in octets of the string.
-  - to present this in bytes, we can write $x_{P<(le o b):256>}$ meaning the binary representation of the octet string.
-- The sign of a the scalar $x_P$ could be represented as $x_{P<(sign|le|o|b):1>} = x_{P<(le o b):256:[0]>}$. This representation only tells the reader that the expression contains only the sign of $x_P$. But also indicates that the byte conversion from the scalar $x_P$ occured in the little endian order.
+  - to present this in bytes, we can write $x_{P<(le:o\\:b):256>}$ meaning the binary representation of the octet string.
+- The sign of a the scalar $x_P$ could be represented as $x_{P<(sign:le\\:o\\:b):1>} = x_{P<(le:o\\:b):256:[0]>}$. This representation only tells the reader that the expression contains only the sign of $x_P$. But also indicates that the byte conversion from the scalar $x_P$ occured in the little endian order.
 - The encoding of point $P$ ends up looking like
 
-$$P=(x_P,y_P) \rightarrow P_{<(ed:b):256>} = x_{<P(sign|le|o|b):1>}||y_{P<(le o b):256:[1:]>}$$
+$$P=(x_P,y_P) \rightarrow P_{<(ed:b):256>} = x_{<P(sign:le\\:o\\:b):1>}||y_{P<(le:o\\:b):256:[1:]>}$$
 
 This will add the sign bit of $x$ to the last 255 bytes of $y$.
 
@@ -71,14 +72,14 @@ In the rest of the document, we will use $phm_{<(b):?>}$ to represent the bitstr
   - $phflag=0$, means prehash function is the identity function (means PureEdDSA),
   - $context$ is a non-empty octet string of length $1<= length <= 32$. The value is agreed upon by signer and verifiers.
   - let $flag_{<(b):32>} = ASCII(\text{SigEd25519 no Ed25519 collisions})$
-  - $dom2(x,y)_{<(b):?>} = flag_{<(b):32>} || x_{<(o):1>} || l_{<(o):1>} ||y_{<(b):l>}$, where
+  - $dom2_{<(b):?>}(x,y) = flag_{<(b):32>} || x_{<(o):1>} || l_{<(o):1>} ||y_{<(b):l>}$, where
     - phflag $x_{<(o):1>} \equiv 0_{<(o):1>}$
     - $l_{<(o):1>}$ is the length of $y \text{ with } 1<= l <= 32$
     - $y_{<(b):l>}$ is the bit string of the context information os size $l$
 - For Ed25519ph:
   - $phflag=1$, with the pre hash function $sha512$
   - let $flag_{<(b):256>} = ASCII(\text{SigEd25519 no Ed25519 collisions})$
-  - $dom2(x,y)_{<(b):?>} = flag_{<(b):256>} || x_{<(o):1>} || l_{<(o):1>} ||y_{<(b):l>}$, where
+  - $dom2_{<(b):?>}(x,y) = flag_{<(b):256>} || x_{<(o):1>} || l_{<(o):1>} ||y_{<(b):l>}$, where
     - phflag $x=1$
     - $l$ is the length of $y \text{ with } 0 <= l <= 255$
     - $y_{<(b):l>}$ is the bit string of the context information
@@ -91,7 +92,11 @@ Finally as notational convention
 Following steps produce a key used with ed255519:
 - Generate a random secret seed $k_{<(b):256>}$ for the user,
 - compute $z_{<(b):512>} = sha512(FLAG_{<(b):?>} || k_{<(b):256>})$,
-- compute the private key scalar $a_{<(le:o):32>} = 2^n \sum_{i=c}^{n-1} 2^iz_{<(b):512:[i]>}$, clearing high and low order bits, where
+- compute the private key scalar 
+  
+  $$a_{<(le:o):32>} = 2^n \sum_{i=c}^{n-1} 2^iz_{<(b):512:[i]>}$$ 
+  
+  clearing high and low order bits, where
   - $c = log_2(8) = 3$, $8$ being the cofactor of the curve, this construction clears the first 3 (low order) bits of the private key.
   - $n = 254$. Starting with $2^{254}$, we set the lower bound of the secret scalar and clear the high order bit at $255$. Therefore all secret scalars are $255$ bits.
 - compute the public key $A = aG$,
@@ -113,12 +118,12 @@ $$u_{<(le:o):64>} = sha512(FLAG_{<(b):?>} || R_{<(ed:b):256>}||A_{<(ed:b):256>>}
 
 - For efficiency, compute $u \equiv u_{<(le:o):64>} \pmod p$, where $p$ is the order of $G$,
 - compute the signature scalar $s \equiv r + (u \times a) \pmod p$,
-- return the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le o b):256>}$
+- return the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o\\:b):256>}$
 
 # Verification
 ## Available Information
 The verifier has access to:
-- the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le o b):256>}$
+- the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o\\:b):256>}$
 - the public key point $A$
 
 The verifier can:
@@ -131,6 +136,7 @@ Further variant specific checks
 - check that $0 \lt s \lt p$, where $p = |G|$, the order of the generator G
 ## Verification
 A signature is verified by applying
+
 $$
 \begin{aligned}
 2^c(R \circ uA) &= 2^c(aG)
