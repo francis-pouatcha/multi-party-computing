@@ -49,10 +49,10 @@ EdDSA points are encoded in the format:
   - $le$ stands for little endian bytes order
   - $32$ is the size in octets of the string.
   - to present this in bytes, we can write $x_{P<(le:o)(b):256>}$ meaning the binary representation of the octet string.
-- The sign of a the scalar $x_P$ could be represented as $x_{P<(sign:le\\:o\\:b):1>} = x_{P<(le:o\\:b):256:[0]>}$. This representation only tells the reader that the expression contains only the sign of $x_P$. But also indicates that the byte conversion from the scalar $x_P$ occured in the little endian order.
+- The sign of a the scalar $x_P$ could be represented as $x_{P<(sign)(le:o)(b):1>} = x_{P<(le:o)(b):256:[0]>}$. This representation only tells the reader that the expression contains only the sign of $x_P$. But also indicates that the byte conversion from the scalar $x_P$ occured in the little endian order.
 - The encoding of point $P$ ends up looking like
 
-$$P=(x_P,y_P) \rightarrow P_{<(ed:b):256>} = x_{<P(sign:le\\:o\\:b):1>}||y_{P<(le:o\\:b):256:[1:]>}$$
+$$P=(x_P,y_P) \rightarrow P_{<(ed:b):256>} = x_{<P(sign)(le:o)(b):1>}||y_{P<(le:o)(b):256:[1:]>}$$
 
 This will add the sign bit of $x$ to the last 255 bytes of $y$.
 
@@ -118,12 +118,12 @@ $$u_{<(le:o):64>} = sha512(FLAG_{<(b):?>} || R_{<(ed:b):256>}||A_{<(ed:b):256>>}
 
 - For efficiency, compute $u \equiv u_{<(le:o):64>} \pmod p$, where $p$ is the order of $G$,
 - compute the signature scalar $s \equiv r + (u \times a) \pmod p$,
-- return the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o\\:b):256>}$
+- return the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o)(b):256>}$
 
 # Verification
 ## Available Information
 The verifier has access to:
-- the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o\\:b):256>}$
+- the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o)(b):256>}$
 - the public key point $A$
 
 The verifier can:
