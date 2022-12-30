@@ -1,7 +1,7 @@
 # Distributed Key Generation
-We want to allow a set of $n$ parties to perform a distributed secure computation, e.g.: joinly sign a document, without any party disclosing its own secret to others. Why, because we want to make sure a single compromised party will not jeopardize the whole procedure.
+We want to allow a set of $n$ parties to perform a distributed secure computation, e.g.: jointly sign a document, without any party disclosing its own secret to others. Why, because we want to make sure a single compromised party will not jeopardize the whole procedure.
 
-This can off course happen by the mean of each party signing the document, known as multi signature. But in some cases, we want the totality of parties to produce a single signature, or joinly decrypt a single document.
+This can of course happen by the means of each party signing the document, known as multi signature. But in some cases, we want the totality of parties to produce a single signature, or joinly decrypt a single document.
 
 If many keys could be added to each other to form a new single key, producing a distributed key would boil down to having each party $P_h$ produce a key share $s_h$ and the distributed key will end up being considered $s = \sum_{h} s_h$.
 
@@ -126,7 +126,7 @@ Shares or polynomial points are held by parties, neither the secret $y_p=f(x_p)$
 - Some standards like [SLIP-0039](https://github.com/satoshilabs/slips/blob/master/slip-0039.md) store the secret at $x_p=255$ and not at $x_p=0$.
 
 # Applying Secret Sharing to DKG
-In the special case of DKG, we want each party to generate it own share and keep it secret. In this case, we can not trust any dealer to define a secret polynomial. Therefore, the secret polynomial isn't known to any single party.
+In the special case of DKG, we want each party to generate its own share and keep it secret. In this case, we can not trust any dealer to define a secret polynomial. Therefore, the secret polynomial isn't known to any single party.
 
 ## Computing a Distributed Secret Polynomial
 In order to compute a polynomial that is distributed among the parties, we will have to rely on the property that the sum of polynomials is a polynomial. The following picture displays polynomials $g(x) = f(x) + h(x)$ and sample evaluations at points $x=2$ and $x=3$. See that $(f(2) + h(2) = g(2) \equiv 4 +5=9$.

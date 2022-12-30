@@ -1,13 +1,16 @@
 # ECDSA Threshold Signature
 In order to enlighten the mystery behind TSS (threshold signature schemes), we want to elaborate details of our reading of following documents: [GG20](https://eprint.iacr.org/2020/540) and [CGGMP](https://eprint.iacr.org/2021/060).
 
+The definition of bit and byte strings as used in this document is found in [strings expressions](./conv-ser-enc.md).
+
 # Threshold ECDSA
 We elaborate on ECDSA in the document [ECDSA](./ecdsa.md). Terms and idioms used here are also defined in [ECDSA](./ecdsa.md).
 
-For threshold ECDSA, we need a way to compute the signature $(r,s) \in \mathbb{Z^2_p}$ where:
+For threshold ECDSA, we need a way to compute the signature $r_{<(be:o):32>}||s_{<(be:o):32>}$ where 
+- $(r,s) \in \mathbb{Z^2_p}$,
 - $R = {1 \over k}G = (x_R, y_R)$,
-- $r=x_R$, the $x$-coordinate of the point $R$, and
-- $s=k \times (m+(r \times a))$, where $a$ is the private key,
+- $r_{<(be:o):32>}=x_R$, the $x$-coordinate of the point $R$, and
+- $r_{<(be:o):32>}=k \times (m+(r \times a))$, where $a$ is the private key,
 
 without disclosing neither $k$ nor $a$ to a single party.
 
@@ -122,7 +125,7 @@ $$
 and multiplying both sets $k$ and $a$ on indexes $(c,h)$ results in:
 
 $$
-(k \times a)=\sum_{c \in C}k_c * \sum_{h \in C}w_h = \sum_{c,h \in C}(k_c \times w_h)
+(k \times a)=\sum_{c \in C}k_c \times \sum_{h \in C}w_h = \sum_{c,h \in C}(k_c \times w_h)
 $$
 
 We use the multiplicative-to-additive share conversion protocol with check ([MtAwc - see GG20](https://eprint.iacr.org/2020/540)) to distribute the value $(k_c \times w_h)$ additively between $P_c$ and $P_h$. The result of the MtAwc for $(k_c \times w_h)$ are values $\mu_{ch}$ and $\nu_{hc}$ so that $(k_c \times w_h) = \mu_{ch} + \nu_{hc}$. At the end of the subprotocol, each party $P_c$ is in possession of an additive share of $(k \times a)$ called
@@ -134,7 +137,7 @@ $$
 Recall that
 
 $$
-(k \times a) \equiv \sum_{c \in C}k_c * \sum_{h \in C}w_h = \sum_{c,h \in C}k_cw_h = \sum_{c \in C}\sigma_c
+(k \times a) \equiv \sum_{c \in C}k_c \times \sum_{h \in C}w_h = \sum_{c,h \in C}k_cw_h = \sum_{c \in C}\sigma_c
 $$
 
 # Communication Rounds during Share Conversion

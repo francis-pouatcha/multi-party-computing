@@ -14,22 +14,8 @@ Let the expression $\mathbb{E_{(\mathbb{Z_q})}}$ represent an [elliptic-curve gr
 - $G$ is the generator of the group,
 - p is the order of the generator $G$,
 
-Reviewing the following is essential for the understanding of schnorr signature math below:
-- Elements of $\mathbb{Z_q}$ are integer numbers and always written using small letters, e.g.: $a, r$.
-- Elements of $\mathbb{E_{(\mathbb{Z_q})}}$ are points on the curve and always written using capital letters. e.g.: $G, A, R$, where $x_R, y_R$ are integer coordinates of the point $R$. Point coordinates $x_R, y_R$ are also elements of $\mathbb{Z_q}$.
+Reviewing [finite cyclic elliptic curve groups](./ecgroups.md#finite-cyclic-groups-over-elliptic-curves) is essential for the understanding of ECDSA maths below.
 
-### Operations in $(\mathbb{Z}, +, \times, q)$
-- the expression $a + b$ denotes the addition of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted.
-- the expression $a \times b$ denotes the multiplication of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted in a representation.
-
-### Operations in $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$
-- $A \circ B$ denotes the addition of two points $A=(x_A, y_A) \text{ and } B=(x_B, y_B)$, both $A, B \in \mathbb{E}$. Operations on points coordinates $x_A, y_A, x_B, y_B$ are performed in $\mathbb{Z_q}$, which means modulo $q$.
-- $nA$ is the $n$-times addition of the point $A$ to itself. Means $nA=O \circ_1 A \circ_2 A \dots \circ_n A$. This is called the scalar multiplication of the point $A \in \mathbb{E}$ by the integer $n \in \mathbb{Z_q}$.
-- Recall that on $\mathbb{E_{(\mathbb{Z_q})}}$, following applies:
-- $aG \circ bG = (a + b)G$
-- $a (bG) = (a \times b)G$
-
-For more details on groups, see [Elliptic Curve Groups](./ecgroups.md#finite-groups-over-elliptic-curve).
 ## EC Schnorr Signature vs. ECDSA
 The Schnorr Signature as defined in [BIP340](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki) shows a lot of advantages over ECDSA:
 ### Provable security
@@ -43,19 +29,19 @@ Schnorr signatures provide a simple and efficient method that enables multiple c
 ### Point Encoding
 BIP340 specifies a 64-byte Schnorr signature scheme over the elliptic curve secp256k1. EC Point are therefore encoded in the format
 
-$$P=(x_P,y_P) \rightarrow x_{R<(o:be:32)>}||\text{0x02}_{<(o):1>}$$
+$$P=(x_P,y_P) \rightarrow x_{R<(be:o):32>}||\text{0x02}_{<(o):1>}$$
 
-This is the $32$ bytes big endian encoding of the $x$-coordinate, which $y$-coordinate, as BIP340 always __implicitly__ chooses the even $y$-coordinate that is even. Despite the implicite selection, BIP340 adds the indication of the $y$-coordinate, always $\text{0x02}_{<(o):1>}$ to keep backward compatibility with compressed point encoding of ECDSA. In this document we use the notation $P_{<(o:bip340):33>}$ to represent an encoded point.
+This is the $32$ bytes big endian encoding of the $x$-coordinate, which $y$-coordinate, as BIP340 always __implicitly__ chooses the even $y$-coordinate that is even. Despite the implicite selection, BIP340 adds the indication of the $y$-coordinate, always $\text{0x02}_{<(o):1>}$ to keep backward compatibility with compressed point encoding of ECDSA. In this document we use the notation $P_{<(bip340:o):33>}$ to represent an encoded point.
 
 ### Signature
 As defined by BIP340, EC Schnorr signature for
 - message $M$ and
 - public key $A=aG$
 
-is the string $\sigma_{<(o):65>} = R_{<(o:bip340):33>}||s_{<(o:be:32)>}$, where
+is the string $\sigma_{<(o):65>} = R_{<(bip340:o):33>}||s_{<(be:o):32>}$, where
 - the point $R = rG, r \in \mathbb{Z_p}$ is a randomly selected large prime from $\mathbb{Z_p}$,
 - the number $s \equiv r + (u \times a) \pmod p$, whereby $s, r, u, a \in \mathbb{Z_p}$ and
-- $u = sha256(TAG_{<(b):?>}||R_{<(o:bip340):33>}||A_{<(o:bip340):33>}||M_{<(b):?>})$
+- $u = sha256(TAG_{<(b):?>}||R_{<(bip340:o):33>}||A_{<(bip340:o):33>}||M_{<(b):?>})$
 
 ## Verification
 A signature is verified by applying
@@ -75,7 +61,7 @@ R \circ uA &= R \circ uA
 $$
 
 ## Key Prefixing
-In order to prevent the [related key attack](https://en.wikipedia.org/wiki/Related-key_attack), BIP340 prepends the public key to the message $u = sha256(TAG_{<(b):?>}||R_{<(o:bip340):33>}||A_{<(o:bip340):33>}||M_{<(b):?>})$ see above. In this model, the public key $A$ must be present to allow for signature verification, as $A$ is part of the message hash, it can not just be extracted from the signature (like is the case with DSA).
+In order to prevent the [related key attack](https://en.wikipedia.org/wiki/Related-key_attack), BIP340 prepends the public key to the message $u = sha256(TAG_{<(b):?>}||R_{<(bip340:o):33>}||A_{<(bip340:o):33>}||M_{<(b):?>})$ see above. In this model, the public key $A$ must be present to allow for signature verification, as $A$ is part of the message hash, it can not just be extracted from the signature (like is the case with DSA).
 
 # Schnorr Signature Aggregation
 The linearity of Schnorr allows the possibility of implementing signature aggregation.
@@ -98,13 +84,13 @@ $$
 This aggregation is exposed to the weakness that each signer $P_h$ can use his key $a_h$ to forge a signature that can fit into the aggregated signature. Find more detail the [original paper YY22](https://eprint.iacr.org/2022/222)
 
 ## Half Aggregated Signature
-Let $\mu_{<(o:be):32>} = u_{1<(o:be):32>}||u_{2<(o:be):32>}||\dots||u_{n<(o:be):32>}$ be the concatenated bit string of all message hashes.
+Let $\mu_{<(be:o):32>} = u_{1<(be:o):32>}||u_{2<(be:o):32>}||\dots||u_{n<(be:o):32>}$ be the concatenated bit string of all message hashes.
 
-Let $\mu_h=sha256(\mu_{<(o:be):32>}||h_{<(o:be):32>})$, the global message for entry $h$
+Let $\mu_h=sha256(\mu_{<(be:o):32>}||h_{<(be:o):32>})$, the global message for entry $h$
 
 Let $\sigma_h = \mu_h \times s_h$, the aggregate signature entry for signature entry $h$
 
-The Half Aggregated signature is the tuple $(\gamma_{<(o:be):32>}, R_{1<(o:bip340):33>},\dots,R_{n<(o:bip340):33>})$, where
+The Half Aggregated signature is the tuple $(\gamma_{<(be:o):32>}, R_{1<(bip340:o):33>},\dots,R_{n<(bip340:o):33>})$, where
 
 $$
 \gamma = \sum_{h} \sigma_h
@@ -150,7 +136,7 @@ A single entry is reconstructed following these steps:
 
 $$
 \begin{aligned}
-\mu_m &= sha256(\mu_{<(o:be):32>}||m_{<(o:be):32>})
+\mu_m &= sha256(\mu_{<(be:o):32>}||m_{<(be:o):32>})
 \\
 \sigma_m &= \mu_m \times s_m
 \end{aligned}
@@ -191,14 +177,14 @@ The the prover can provide the signature $s_m$, and by verifying that $s_mG = R_
 For the half aggregated signature described above, the aggregator has to wait for all signatures to present before starting with the aggregation process. Aggregating incrementally might save space and improve asynchronicity.
 
 Let
-- $\mu_{1<(o:be):32>} = sha256(u_{1<(o:be):32>})$
-- $\mu_{2<(o:be):32>} = sha256(\mu_{1<(o:be):32>}|| u_{2<(o:be):32>})$
+- $\mu_{1<(be:o):32>} = sha256(u_{1<(be:o):32>})$
+- $\mu_{2<(be:o):32>} = sha256(\mu_{1<(be:o):32>}|| u_{2<(be:o):32>})$
 - $\dots$
-- $\mu_{n<(o:be):32>} = sha256(\mu_{{n-1}<(o:be):32>}|| u_{n<(o:be):32>})$
+- $\mu_{n<(be:o):32>} = sha256(\mu_{{n-1}<(be:o):32>}|| u_{n<(be:o):32>})$
 
 Let $\sigma_h = \mu_h \times s_h$, the aggregate signature entry for signature entry $h$
 
-The incremental aggregated signature is the tuple $(\gamma_{n<(o:be):32>}, R_{1<(o:bip340):33>},\dots,R_{n<(o:bip340):33>})$, where
+The incremental aggregated signature is the tuple $(\gamma_{n<(be:o):32>}, R_{1<(bip340:o):33>},\dots,R_{n<(bip340:o):33>})$, where
 
 $$
 \begin{aligned}
@@ -235,7 +221,7 @@ $$
 $$A = \sum_{h=1}^n A_h$$
 
 Having the values $R, A$, each signer
-- computes the message hash $u = sha256(TAG_{<(b):?>}||R_{<(o:bip340):33>}||A_{<(o:bip340):33>}||M_{<(b):?>})$
+- computes the message hash $u = sha256(TAG_{<(b):?>}||R_{<(bip340:o):33>}||A_{<(bip340:o):33>}||M_{<(b):?>})$
 - computes the partial signature scalar $s_h = r_h + (u \times a_h)$
 - publishes the signature scalar $s_h$
 
@@ -254,7 +240,7 @@ s &= r + (u \times a)
 \end{aligned}
 $$
 
-Each party can publish the signature string $\sigma_{<(o):65>} = R_{<(o:bip340):33>}||s_{<(o:be:32)>}$
+Each party can publish the signature string $\sigma_{<(o):65>} = R_{<(bip340:o):33>}||s_{<(be:o):32>}$
 
 ## Rogue-key attack
 This protocol is vulnerable to a rogue-key attack where a corrupted signer reports its public key $A_n = A - \sum_{h=1}^{n-1}A_h$ to orchestrate the production of a preknown public key $A = aG$. The reporter will then be able to use a known private key $a$ to produce signatures without the collaboration of other parties. Details can be found [here](https://courses.csail.mit.edu/6.857/2020/projects/4-Elbahrawy-Lovejoy-Ouyang-Perez.pdf).
@@ -292,7 +278,7 @@ Upon receiving all $R_c$, each member $P_c$ must:
 
 $$R = \sum_{c=1}^{t+1} R_c$$
 
-- compute the common message hash $u = sha256(TAG_{<(b):?>}||R_{<(o:bip340):33>}||A_{<(o:bip340):33>}||M_{<(b):?>})$
+- compute the common message hash $u = sha256(TAG_{<(b):?>}||R_{<(bip340:o):33>}||A_{<(bip340:o):33>}||M_{<(b):?>})$
 - compute the partial signature scalar $s_c = r_c + (u \times w_c)$
 - publish $s_c$
 
@@ -314,7 +300,7 @@ Having proceeded with an $t \text{ of } n$ secret sharing to produce a threshold
 Knowing
 
 
-we can generate a [neutered random number](./bip32.md#neutered-derivation) $n_{pub:i<(o:be):32>}$ for the child key index $i$.
+we can generate a [neutered random number](./bip32.md#neutered-derivation) $n_{pub:i<(be:o):32>}$ for the child key index $i$.
 
 As we know the number of co signers $|C|=t+1$, we can divide the neutered random number by $t+1$ and augment the result to the interpolated secret shares.
 

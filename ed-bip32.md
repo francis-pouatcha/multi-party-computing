@@ -6,7 +6,7 @@ The definition of bit and byte strings as used here is found in [strings express
 ## Little Endianness
 For EdDSA and the corresponding ed-BIP32 key derivation process, all bytes to number encodings and decodings are performed assuming the __little endian__ oder of the underlying octet string.
 
-Nevertheless, we will still be explicitly indicating it using e.g. $a_{<(o:le):32>}$ to indicate the scalar number $s$ as being from a $32$ bytes litle endian string. 
+Nevertheless, we will still be explicitly indicating it using e.g. $a_{<(le:o):32>}$ to indicate the scalar number $s$ as being from a $32$ bytes litle endian string. 
 
 ## Producing an ed25519 Extended Master Key
 Following steps produce a key for use with ed255519:
@@ -23,9 +23,9 @@ Following steps produce a key for use with ed255519:
   - $n = 254$. Starting with $2^{254}$, we set the lower bound of the secret scalar and clear the high order bit at $255$.
 - set $k_{<(b):512:[254]>}=1_{<(b):1>}$, setting the second highest bit of $k_L$
   - this secures all secret scalars are $255$ bits. Defined for performance reasons. See [performance paper](https://www.iacr.org/cryptodb/archive/2006/PKC/3351/3351.pdf).
-- compute the private key scalar $a_{<(o:le):32>} = k_{<(b):512:[:255]>} \equiv k_L$,
-- compute the random scalar $r_{<(o:le):32>} = k_{<(b):512:[256:]>} \equiv k_R$,
-- compute the root chaincode $c_{<(o:le):32>} = sha256(\text{0x01}_{<(o):1>}||s)$,
+- compute the private key scalar $a_{<(le:o):32>} = k_{<(b):512:[:255]>} \equiv k_L$,
+- compute the random scalar $r_{<(le:o):32>} = k_{<(b):512:[256:]>} \equiv k_R$,
+- compute the root chaincode $c_{<(le:o):32>} = sha256(\text{0x01}_{<(o):1>}||s)$,
 
 The resulting extended private key is the tuple $(a, r, c) = (k_L, k_R, c)$,
 - Per convention, we also call this tuple $(a_{parent},r_{parrent},c_{parrent})$
@@ -40,17 +40,17 @@ For hardened derivation, meaning $i \ge 2^{31}$, we proceed with
 
 $$
 \begin{aligned}
-z_{h<(b):512>} &= HM_{<(b):512>}(c_{parent<(o:le):32>}, \text{0x00}_{<(o):1>} || a_{parent<(o:le):32>} || r_{parent<(o:le):32>} || i_{child<(o:le):4>})
+z_{h<(b):512>} &= HM_{<(b):512>}(c_{parent<(le:o):32>}, \text{0x00}_{<(o):1>} || a_{parent<(le:o):32>} || r_{parent<(le:o):32>} || i_{child<(le:o):4>})
 \\
-c'_{child:i<(b):512>} &= HM_{<(b):512>}(c_{parent<(o:le):32>}, \text{0x01}_{<(o):1>} || a_{parent<(o:le):32>} || r_{parent<(o:le):32>} || i_{child<(o:le):4>})
+c'_{child:i<(b):512>} &= HM_{<(b):512>}(c_{parent<(le:o):32>}, \text{0x01}_{<(o):1>} || a_{parent<(le:o):32>} || r_{parent<(le:o):32>} || i_{child<(le:o):4>})
 \\
-c_{child:i<(o:le):32>} &=c'_{child:i<(b):512:[256:]>}
+c_{child:i<(le:o):32>} &=c'_{child:i<(b):512:[256:]>}
 \end{aligned}
 $$
 
 Constructing the child key:
-- $z_{hL<(o:le):28>} = z_{h<(o):64:[:27]>}$, we take the first $28$ octets of $z_h$,
-- $z_{hR<(o:le):32>} = z_{h<(o):64:[32:]>}$, we take the last $32$ octets of $z_h$,
+- $z_{hL<(le:o):28>} = z_{h<(o):64:[:27]>}$, we take the first $28$ octets of $z_h$,
+- $z_{hR<(le:o):32>} = z_{h<(o):64:[32:]>}$, we take the last $32$ octets of $z_h$,
 - $a_{child:i} = (8 \times z_{hL}) + a_{parent}$
 - $r_{child:i} = z_{hR} + r_{parent } \pmod {2^{256}}$
 - $A_{child:i} = a_{child:i}G$
@@ -69,21 +69,21 @@ For neutered key derivation, means $i \le 2^{31}$, we proceed with
 
 $$
 \begin{aligned}
-z_{n<(b):512>} &= HM_{<(b):512>}(c_{parent<(o:le):32>}, \text{0x02}_{<(o):1>} || A_{parent<(o:ed):32>} || i_{child:<(o:le):4>})
+z_{n<(b):512>} &= HM_{<(b):512>}(c_{parent<(le:o):32>}, \text{0x02}_{<(o):1>} || A_{parent<(ed:b):256>} || i_{child:<(le:o):4>})
 \\
-c'_{child:i<(b):512>} &= HM_{<(b):512>}(c_{parent<(o:le):32>}, \text{0x03}_{<(o):1>} || A_{parent<(o:ed):32>} || i_{child<(o:le):4>})
+c'_{child:i<(b):512>} &= HM_{<(b):512>}(c_{parent<(le:o):32>}, \text{0x03}_{<(o):1>} || A_{parent<(ed:b):256>} || i_{child<(le:o):4>})
 \\
-c_{child:i<(o:le):32>} &=c'_{child:i<(b):512:[256:]>}
+c_{child:i<(le:o):32>} &=c'_{child:i<(b):512:[256:]>}
 \end{aligned}
 $$
 
 Remark:
-- $A_{<(o:ed):32>}$ is the ed25519 encoding of the public key point $A$.
+- $A_{<(ed:b):256>}$ is the ed25519 encoding of the public key point $A$.
 - $c'_{child:i<(b):512:[256:]>}$ means the hash result for chain codes are truncated to the right 256 bits.
 
 Constructing the child key:
-- $z_{nL<(o:le):28>} = z_{n<(o):64:[:27]>}$, we take the first $28$ octets of $z_n$,
-- $z_{nR<(o:le):32>} = z_{n<(o):64:[32:]>}$, we take the last $32$ octets of $z_n$,
+- $z_{nL<(le:o):28>} = z_{n<(o):64:[:27]>}$, we take the first $28$ octets of $z_n$,
+- $z_{nR<(le:o):32>} = z_{n<(o):64:[32:]>}$, we take the last $32$ octets of $z_n$,
 - $a_{child:i} = (8 \times z_{nL}) + a_{parent}$
 - $r_{child:i} = z_{nR} + r_{parent} \pmod {2^{256}}$
 - $A_{child:i} = a_{child:i}G$, if $a_{child:i}$ available, or

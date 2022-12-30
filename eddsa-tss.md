@@ -22,27 +22,9 @@ Let the expression $\mathbb{E_{(\mathbb{Z_q})}}$ represent the set of points con
 - p is the order of the generator $G$,
 
 ## Reviewing Notation
-Reviewing the following is essential to judge the formal correctness of maths below
-### Sets
-- $\mathbb{Z_q}$ is the set of all integers modulo $q$.
-- Elements of $\mathbb{Z_q}$ are integer numbers and always written using small letters, e.g.: $a, r$.
-- In the case of twisted edwards curves, $\mathbb{Z_q} \equiv \mathbb{Z_{c^n}}$, where $c$ is the characteristic of the field and $n$ the degree. We will keep using $\mathbb{Z_q}$ for simplicity of presentation below.
-- $\mathbb{E_{(\mathbb{Z_q})}}$ is the set of all points computed on the curve $E_{TEd}(y,x)$ using the generator $G$.
-- Elements of $\mathbb{E_{(\mathbb{Z_q})}}$ are therefore points on that curve and always written using capital letters. e.g.: $G, A, R$, where $x_R, y_R$ are integer coordinates of the point $R$. Point coordinates $x_R, y_R$ are also elements of $\mathbb{Z_q}$.
+Reviewing [finite cyclic elliptic curve groups](./ecgroups.md#finite-cyclic-groups-over-elliptic-curves) is essential for the understanding of ECDSA maths below.
 
-### Field Operations in $(\mathbb{Z}, +, \times, q)$
-- the expression $a + b$ denotes the addition of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted.
-- the expression $a \times b$ denotes the multiplication of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted.
-
-### Group Operations in $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$
-- $A \circ B$ denotes the addition of two points $A=(x_A, y_A) \text{ and } B=(x_B, y_B)$, both $A, B \in \mathbb{E}$. Operations on points coordinates $x_A, y_A, x_B, y_B$ are performed in $\mathbb{Z_q}$, which means modulo $q$.
-- If we need a point subtraction, we will use $A \ominus B$, that stands for the $A \circ (-B)$ where $(-B)$ is the additive inverse of $B$.
-- $dA$ is the $d$-times addition of the point $A$ to itself. Means $nA=O \circ_1 A \circ_2 A \dots \circ_d A$. This is called the scalar multiplication of the point $A \in \mathbb{E_{(\mathbb{Z_q})}}$ by the integer $d \in \mathbb{Z_q}$.
-- Recall that on $\mathbb{E_{(\mathbb{Z_q})}}$, following applies:
-  - $aG \circ bG = (a + b)G$
-  - $a (bG) = (a \times b)G$
-
-### Example of Curve Parameters
+## Example of Curve Parameters
 Edwards25519 is birationally equivalent to Montgomery curve curve25519, which due to its efficient arithmetic implementation, allows for constructions of very performant cryptographic applications.
 
 Edwards25519 is defined over the finite field $\mathbb{Z_q}$ with:
@@ -56,7 +38,6 @@ Curve25519 is defined over the finite field $\mathbb{Z_q}$ with:
 - curve equation: $y^2 = x^3 + 486662x^2 + x$.
 
 ### Point Encoding
-
 The definition of bit and byte strings as used here is found in [strings expressions](./conv-ser-enc.md).
 
 EdDSA points are encoded in the format:
@@ -134,8 +115,8 @@ $$u_{<(le:o):64>} = sha512(FLAG_{<(b):?>} || R_{<(ed:b):256>}||A_{<(ed:b):256>>}
 - compute the signature scalar $s \equiv r + (u \times a) \pmod p$,
 - return the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o:b):256>}$
 
-## Verification
-### Available Information
+# Verification
+## Available Information
 The verifier has access to:
 - the encoded signature $\sigma_{<(b):512>} = R_{<(ed:b):256>}||s_{<(le:o:b):256>}$
 - the public key point $A$
@@ -145,10 +126,10 @@ The verifier can:
 - compute the random point $R \leftarrow R_{<(ed:b):256>}$
 - verify $R \in \mathbb{E}_{(Z_q)}$
 - verify the signature scalar $s \in \mathbb{Z_q}$
-### Further Checks
+## Further Checks
 Further variant specific checks
 - check that $0 \lt s \lt p$, where $p = |G|$, the order of the generator G
-### Verification
+## Verification
 A signature is verified by applying
 $$
 \begin{aligned}
@@ -167,7 +148,7 @@ $$
 # Signature Aggregation
 EdDSA signature aggregation follows the same procedure as [Schnorr signature aggregation](./schnorr-tss.md#schnorr-signature-aggregation).
 
-# Schnorr n-of-n Multi Signature
+# EdDSA n-of-n Multi Signature
 
 EdDSA multi signature also follows the same procedure as [Schnorr multi signature](./schnorr-tss.md#schnorr-n-of-n-multi-signature).
 

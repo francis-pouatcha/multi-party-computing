@@ -1,6 +1,8 @@
 # ECDSA Signature
 ECDSA specifies the use of [elliptic curves](./ecgroups.md) for the construction of DSA signatures.
 
+The definition of bit and byte strings as used in this document is found in [strings expressions](./conv-ser-enc.md).
+
 ## Elliptic Curves
 Let the expression $\mathbb{Z_q}$ represent the field of integers modulo $q$ written $(\mathbb{Z}, +, \times, q)$.
 
@@ -10,23 +12,11 @@ Let the expression $\mathbb{E_{(\mathbb{Z_q})}}$ represent an [elliptic-curve gr
 - $G$ is the generator of the group,
 - p is the order of the generator $G$,
 
-Reviewing the following is essential for the understanding of ECDSA maths below:
-- Elements of $\mathbb{Z_q}$ are integer numbers and always written using small letters, e.g.: $a, r$.
-- Elements of $\mathbb{E_{(\mathbb{Z_q})}}$ are points on the curve and always written using capital letters. e.g.: $G, A, R$, where $x_R, y_R$ are integer coordinates of the point $R$. Point coordinates $x_R, y_R$ are also elements of $\mathbb{Z_q}$.
+Reviewing [finite cyclic elliptic curve groups](./ecgroups.md#finite-cyclic-groups-over-elliptic-curves) is essential for the understanding of ECDSA maths below.
 
-### Operations in $(\mathbb{Z}, +, \times, q)$
-- the expression $a + b$ denotes the addition of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted.
-- the expression $a \times b$ denotes the multiplication of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted.
-
-### Operations in $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$
-- $A \circ B$ denotes the addition of two points $A=(x_A, y_A) \text{ and } B=(x_B, y_B)$, both $A, B \in \mathbb{E}$. Operations on points coordinates $x_A, y_A, x_B, y_B$ are performed in $\mathbb{Z_q}$, which means modulo $q$.
-- $nA$ is the $n$-times addition of the point $A$ to itself. Means $nA=O \circ_1 A \circ_2 A \dots \circ_n A$. This is called the scalar multiplication of the point $A \in \mathbb{E}$ by the integer $n \in \mathbb{Z_q}$.
-- Recall that on $\mathbb{E_{(\mathbb{Z_q})}}$, following applies:
-- $aG \circ bG = (a + b)G$
-- $a (bG) = (a \times b)G$
 
 ## ECDSA Signature
-Let $a \in_{rand} \mathbb{Z_q}$ be the secret key, a random number uniformly sampled from the field $\mathbb{Z_q}$, the ECDSA signature is a pair $(s,r) \in \mathbb{Z^2_q}$ where:
+Let $a \in_{rand} \mathbb{Z_q}$ be the secret key, a random number uniformly sampled from the field $\mathbb{Z_q}$, the ECDSA signature is the string $r_{<(be:o):32>}||s_{<(be:o):32>}$ where the pair $(s,r) \in \mathbb{Z^2_q}$ where:
 - $r$ represents the coordinate $x_R$ of the public image $R = ({1 \over k}G)$ of a random parameter $k \in_{rand} \mathbb{Z_q}$. Random $k$ is used to mask the secret key,
 - $s$ is the signature, computed with the formula $s = k(m+ (r \times a))$, where $m=H (M)$ and $H : M \rightarrow \mathbb{Z_q}$ is a hash function used to embed the message $M$ into an element $m \in \mathbb{Z_q}$, or in short, into a number.
 
