@@ -48,7 +48,7 @@ EdDSA points are encoded in the format:
   - $o$ stands for octet string
   - $le$ stands for little endian bytes order
   - $32$ is the size in octets of the string.
-  - to present this in bytes, we can write $x_{P<(le::o:b):256>}$ meaning the binary representation of the octet string.
+  - to present this in bytes, we can write $x_{P<(le\\::o:b):256>}$ meaning the binary representation of the octet string.
 - The sign of a the scalar $x_P$ could be represented as $x_{P<(sign:le\\:o\\:b):1>} = x_{P<(le:o\\:b):256:[0]>}$. This representation only tells the reader that the expression contains only the sign of $x_P$. But also indicates that the byte conversion from the scalar $x_P$ occured in the little endian order.
 - The encoding of point $P$ ends up looking like
 
