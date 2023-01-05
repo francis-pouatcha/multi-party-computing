@@ -10,7 +10,7 @@ For threshold ECDSA, we need a way to compute the signature $r_{<(be:o):32>}||s_
 - $(r,s) \in \mathbb{Z^2_p}$,
 - $R = {1 \over k}G = (x_R, y_R)$,
 - $r_{<(be:o):32>}=x_R$, the $x$-coordinate of the point $R$, and
-- $r_{<(be:o):32>}=k \times (m+(r \times a))$, where $a$ is the private key,
+- $s_{<(be:o):32>}=k \times (m+(r \times a))$, where $a$ is the private key,
 
 without disclosing neither $k$ nor $a$ to a single party.
 

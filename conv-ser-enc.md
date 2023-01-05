@@ -11,7 +11,7 @@ $s_{<(e:e:e:e):n:[i:j]>}$ where:
   - $P_{<(ec:b):264>}$ an encoded ec point with 264 bits.
   - $P_{<(ed:b):256>}$ an encoded ed point with 256 bits.
   - $n_{<(le:o):32>}$ a $32$ octets little endian representation of the scalar number $n$.
-  - $n_{<(le:o:b):256>}$ the 256 bits reading of the a $256/8$ octets little endian representation of the scalar number $n$. This is important if we want to proceed with bitwise selection or manipulation of the string.
+  - $n_{<(le:o)(b):256>}$ the 256 bits reading of the a $256/8$ octets little endian representation of the scalar number $n$. This is important if we want to proceed with bitwise selection or manipulation of the string.
   - $n_{<(be:o):32>}$ a $32$ octets big endian representation of the scalar number $n$.
 - $n$ describes the size of the string. e.g.: $s_{<(b):512>}$ or $s_{<(o):28>}$. Remark that it is always the size of the last object in the preceding parentheses.
 - $[i:j]$ indicates the selection. Zero based.
