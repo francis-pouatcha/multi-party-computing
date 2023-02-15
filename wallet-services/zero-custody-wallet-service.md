@@ -33,3 +33,6 @@ In a company business, a single threshold address can be used to collect revenue
 
 ## BIP341 Taproot
 BIP341 transactions embed spending rules into a merkel tree. The produce address contains the resulting merkel root, but give no information on the alternative spending paths. It is therefore in the interest of the owner of the output to store source information off chain, so this can be used to produce a legitimate signature when needed.
+
+# On Chain Custody Rules
+When a platform supports smart contracts, wallet custody and recovery rules can be programmed into smart contracts. Some proposals like the [Ethereum Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337) to simplify integration of these features into the native consensus mechanism.
