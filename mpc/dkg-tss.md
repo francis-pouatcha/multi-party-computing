@@ -269,3 +269,6 @@ Building on a finite field allows to:
 - spread polynomial coefficients over uniformly random sets of values and thus, prevent easy approximation of secret shares.
 
 Most implementations of the SSSS will operate over $\mathbb{F_{(2^8)}}$, that is the field implemented on most computers and used in the AES encryption.
+
+# Next
+Proceed with [Fields, groups, elliptic curves and associated hardness assumptions](./mpc/ecgroups.md).

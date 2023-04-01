@@ -11,10 +11,10 @@ The following figure is at the heart of distributed key generation.
 
 Each line hides a secret. As you need two points to draw a line.
 
-1. Alice draws a secret line (blue) and shares only the point (3,5) with Bob.
-2. Bob draws a secret line (red) and shares only the point (2,5) with Alice.
+1. Alice draws a secret line (blue) and shares only the point $(3,5)$ with Bob.
+2. Bob draws a secret line (red) and shares only the point $(2,5)$ with Alice.
 3. The sum of both lines is a distributed secret line (green) whose coordinate are unknown to a single party.
-4. The distributed secret line hides the distributed secret at (0,3).
+4. The distributed secret line hides the distributed secret at $(0,3)$.
 
 I hope simple enough, not to scare away the reader.
 
