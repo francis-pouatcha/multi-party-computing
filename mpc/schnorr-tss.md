@@ -171,7 +171,7 @@ $$
 This shows that verifying the membership of a single entry means verifying the validity of the delta and per consequence verifying the whole signature.
 
 ### Verifying a known Membership
-The the prover can provide the signature $s_m$, and by verifying that $s_mG = R_m \circ u_mA_m$, we also verify that $s_m$ is included in the aggregated $\gamma$ with
+The prover can provide the signature $s_m$, and by verifying that $s_mG = R_m \circ u_mA_m$, we also verify that $s_m$ is included in the aggregated $\gamma$.
 
 ## Incremental Aggregated Signature
 For the half aggregated signature described above, the aggregator has to wait for all signatures to present before starting with the aggregation process. Aggregating incrementally might save space and improve asynchronicity.
@@ -197,9 +197,9 @@ $$
 $$
 
 # Schnorr n-of-n Multi Signature
-A signature aggregation scheme for Schnorr allows $n$-of-$n$ multi signatures which, from a verifier's perspective, are no different from ordinary signatures.
+A signature aggregation scheme for Schnorr allows $n:n$ multi signatures which, from a verifier's perspective, are no different from ordinary signatures.
 
-Let a group of $n$ signers with the set $L = \{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG\}$ be their public keys, means the common secret $a = \sum_{h=1}^na_h$.
+Let a group of $n$ signers with the set $L = \set{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG}$ be their public keys, means the common secret $a = \sum_{h=1}^n a_h$.
 
 In order to sign a message $M$, each signer $P_h$
 - selects a large random prime $r_h \in \mathbb{Z_p}$ and
