@@ -81,14 +81,14 @@ It turns out that $(\mathbb{G}, \circ, E, G)$ has exactly $p$ elements. The numb
 Let $(\mathbb{G}, \circ, E, G, p)$ be a group with generator $G$ of order $p$, on the binary group operation $\circ$. If $p$ is a prime number, then $(\mathbb{G}, \circ, E, G, p)$ is a prime order group.
 
 # Elliptic-Curves (EC)
-Keeping simple for the purpose of this work, [elliptic curve](https://mathworld.wolfram.com/EllipticCurve.html) are a special types of equation with the form $E(x,y) \implies y^2=x^3+ax+b$ (in the weierstrass form), whose elements known as points $(x, y)$. Enriched with a well defined points addition operation, they share some properties of algebraic __groups__, useful for the construction of cryptographic primitives.
+Keeping simple for the purpose of this work, [elliptic curve](https://mathworld.wolfram.com/EllipticCurve.html) are a special types of equation with the form $E(x,y) \implies y^2=x^3+ax+b$ (in the weierstrass form), whose elements are known as points $(x, y)$. Enriched with a well defined points addition operation, they share some properties of algebraic __groups__, useful for the construction of cryptographic primitives.
 
 ## Arithmetic of Elliptic-Curves
 ### Identity Element
 There is a point $O$ on the curve so that $\forall_{P \in \mathbb{E}}, P \circ O = P$. This point is the identity element of the group. For some curves it is an imaginary point called the __Point at Infinity__.
 
 ### Elliptic-Curves Arithmetic Law (ECA)
-On an elliptic-curve, a straight line can cross up to $3$ points $P, Q, R$. ECA defines the sum of those three points to be the identity element $O$, meaning $P \circ Q \circ R = O$.
+On an elliptic-curve, a straight line can cross up to $3$ points $P, Q, R$. ECA defines the subsequent application of the group operation to those three points to return the identity element $O$, meaning $P \circ Q \circ R = O$.
 
 ### Additive Inverse
 The following figure displays a line that crosses only two points $P, Q$ and is neither tangent to $P$ nor to $Q$.
@@ -112,7 +112,7 @@ Therefore $-P$ is set to be the additive inverse of $P$.
 In the weierstrass form, this also means the point $P=(x_P, y_P)$ is the inverse of the point $Q = -P=(x_P, -y_P)$.
 
 ### Point Addition
-ECA states that the sum of $3$ points $P, Q, R$ on the same straight line is the identity element $O$. Meaning that $P \circ Q \circ R = O$ as displayed on the figure below.
+ECA states that the the subsequent application of the group operation on $3$ points $P, Q, R$ on the same straight line results to the identity element $O$. Meaning that $P \circ Q \circ R = O$ as displayed on the figure below.
 
 ![EC Arithmetic - 1](./img/eca-1.png)
 
@@ -157,23 +157,23 @@ Therefore, from a generator point $G$, ECA allows the construction of finite cyc
 - $\mathbb{E_{(\mathbb{Z_q})}}$ is the set of all points computed on the curve equation $E(y,x)$ using the generator $G$.
 - Elements of $\mathbb{E_{(\mathbb{Z_q})}}$ are therefore points on that curve and always written using capital letters. e.g.: $G, A, R$, where $x_R, y_R$ are integer coordinates of the point $R$. Point coordinates $x_R, y_R$ are also elements of $\mathbb{Z_q}$.
 
-## Operations in $(\mathbb{Z}, +, \times, q)$
+## Operations in the Field $(\mathbb{Z}, +, \times, q)$
 - the expression $a + b$ denotes the addition of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted.
 - the expression $a \times b$ denotes the multiplication of two integers $a, b \in \mathbb{Z_q}$. They are always performed modulo $q$ even if omitted.
 
-## Operations in $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$
+## Operations in the Group $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$
 - $A \circ B$ denotes the addition of two points $A=(x_A, y_A) \text{ and } B=(x_B, y_B)$, both $A, B \in \mathbb{E}$. Operations on points coordinates $x_A, y_A, x_B, y_B$ are performed in $\mathbb{Z_q}$, which means modulo $q$.
-- $A \ominus B$ denotes the substration of the point $B$ from the point $A$. It is our invention for presation purpose. The real operation is $A \ominus B \equiv A \circ (-B)$, where $(-B)$ is the additive inverse of $B$ in the group.
-- $nA$ is the $n$-times addition of the point $A$ to itself. This is called the scalar multiplication of the point $A \in \mathbb{E}$ by the integer $n \in \mathbb{Z_q}$ and display as
+- $A \ominus B$ denotes the subtraction of the point $B$ from the point $A$. It is our invention for presentation purpose. The real operation is $A \ominus B \equiv A \circ (-B)$, where $(-B)$ is the additive inverse of $B$ in the group.
+- $nA$ is the $n$-times addition of the point $A$ to itself. This is called the scalar multiplication of the point $A \in \mathbb{E}$ by the integer $n \in \mathbb{Z_q}$ and display as 
 
-$$nA=O \circ_1 A \circ_2 A \dots \circ_n A$$ 
+$$nA= O \circ_1 A \circ_2 A \dots \circ_n A$$
 
-- We also use the $\sum$ symbol to display the aggregated group operation
+- We also use the $\sum$ symbol to display the aggregated group operation 
 
-$$ \sum_{i=1}^nA = A_1 \circ A_2 \circ \dots \circ A_i \circ \dots \circ A_n$$ 
+$$\sum_{i=1}^nA = A_1 \circ A_2 \circ \dots \circ A_i \circ \dots \circ A_n$$
 
 ## Linearity of $\circ$ in $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$
-The linearity of the group operation allow the performance of following equivalences in $\mathbb{E_{(\mathbb{Z_q})}}$:
+The linearity of the group operation allows the performance of following equivalences in $\mathbb{E_{(\mathbb{Z_q})}}$:
 - $nG \circ mG = (n + m)G$ and
 - $n(mG) = (n \times m)G$
 
@@ -183,9 +183,9 @@ The second statement $n(mG) = (n \times m)G$ tells us that: knowing the scalar $
 
 This detail is essential for an effective understanding of resulting hardness assumptions defined below.
 
-# EC based Hardness Assumption
+# EC based Hardness Assumptions
 ## Elliptic-Curve Discrete Log Problem (ECDLP)
-Working on the cyclic, finite elliptic-curve group $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$, and given a point $Q \in \mathbb{E}$, it is hard to find the __sufficiently large__ number $n$ such that $Q=nG$. This means it is hard to compute how many times we have to add the point $G$ to itself to get to the point $Q$.
+Working on the cyclic, finite elliptic-curve group $(\mathbb{E_{(\mathbb{Z_q})}}, \circ, O, G, p)$ and given a point $Q \in \mathbb{E}$, it is hard to find the __sufficiently large__ number $n$ such that $Q=nG$. This means it is hard to compute how many times we have to apply the group operation $\circ$ to the point $G$ and itself to get to the point $Q$.
 
 Following integer arithmetic, we would say $G = (n^{-1}) Q = mQ$ where $m=n^{-1} \in \mathbb{Z_q}$. Recall that $n^{-1}$ is an integer number, as it is the multiplicative inverse of $n$ in $\mathbb{Z_q}$.
 
@@ -214,3 +214,6 @@ Knowing $aG$ and $bG$, any other party will have to compute $a$ from $aG$ or $b$
 ## N-Parties ECDH
 ECDH can be extended to run among $n$ parties with $n-1$ communication rounds. E.g.: $aG, bG, cG$ are sent around. Then $(a \times b)G, (b \times c)G, (a \times c)G$ are sent around. Finally all parties can compute $(a \times b \times c)G$.
 
+
+# Next
+Proceed with [Threshold signature scheme (TSS) on ECDSA](./mpc/ecdsa-tss.md).
