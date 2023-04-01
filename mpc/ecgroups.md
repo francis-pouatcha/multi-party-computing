@@ -60,7 +60,7 @@ As displayed above, in this document, we will use the $\sum$ symbol for the disp
 The group element $G$ is called the generator of the group.
 
 ## Finite Cyclic Group
-This is a group $(\mathbb{G}, \circ, E, G)$ on the set $\mathbb{G}={E, G, 2G, 3G, \dots, (p-1)G}$, with a finite number of elements $p \in \mathbb{Z}$, where:
+This is a group $(\mathbb{G}, \circ, E, G)$ on the set $\mathbb{G}=$ { $E, G, 2G, 3G, \dots, (p-1)G$ }, with a finite number of elements $p \in \mathbb{Z}$, where:
 - $E$ is the identity element,
 - $\forall_{i \in \mathbb{Z_p}, j \in {\mathbb{Z}}}, i \equiv j \pmod p \implies iG=jG$,
 - $pG=0G=E$ and
