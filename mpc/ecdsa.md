@@ -16,7 +16,8 @@ Reviewing [finite cyclic elliptic curve groups](./ecgroups.md#finite-cyclic-grou
 
 
 ## ECDSA Signature
-Let $a \in_{rand} \mathbb{Z_q}$ be the secret key, a random number uniformly sampled from the field $\mathbb{Z_q}$, the ECDSA signature is the string $r_{<(be:o):32>}||s_{<(be:o):32>}$ where the pair $(s,r) \in \mathbb{Z^2_q}$ where:
+Let $a \in_{rand} \mathbb{Z_q}$ be the secret key, a random number uniformly sampled from the field $\mathbb{Z_q}$, the ECDSA signature is the string $r_{<(be:o):32>}||s_{<(be:o):32>}$ where:
+- the pair $(s,r) \in \mathbb{Z^2_q}$ and
 - $r$ represents the coordinate $x_R$ of the public image $R = ({1 \over k}G)$ of a random parameter $k \in_{rand} \mathbb{Z_q}$. Random $k$ is used to mask the secret key,
 - $s$ is the signature, computed with the formula $s = k(m+ (r \times a))$, where $m=H (M)$ and $H : M \rightarrow \mathbb{Z_q}$ is a hash function used to embed the message $M$ into an element $m \in \mathbb{Z_q}$, or in short, into a number.
 
@@ -57,7 +58,7 @@ $$
 \end{aligned}
 $$
 
-As you can observe, the computation of the signature $s$ happens in $\mathbb{Zq}$ but the verification is done performing point operations in $\mathbb{E_{(\mathbb{Z_q})}}$. This means elliptic curves can allow the verification of the linear constraint $a = ((s \times k^{-1}) - m) \times r^{-1}$ by checking the same constraint on public images in $\mathbb{E_{(\mathbb{Z_q})}}$. The only information not available is the secret number $a$, but we have its public image $A=aG$.
+As you can see observe, the computation of the signature $s$ happens in $\mathbb{Zq}$ but the verification is done performing point operations in $\mathbb{E_{(\mathbb{Z_q})}}$. This means elliptic curves can allow the verification of the linear constraint $a = ((s \times k^{-1}) - m) \times r^{-1}$ by checking the same constraint on public images in $\mathbb{E_{(\mathbb{Z_q})}}$. The only information not available is the secret number $a$, but we have its public image $A=aG$.
 
 The signature is valid if $r = x_{R'}$ and the following validation test are positive.
 

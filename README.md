@@ -30,7 +30,7 @@ I hope simple enough, not to scare away the reader.
 
 [Threshold signature scheme (TSS) on ECDSA](./mpc/ecdsa-tss.md). See [this for ECDSA basics ](./mpc/ecdsa.md).
 
-[Schnorr signature - BIP340](./mpc/schnorr-tss.md)
+[Threshold signature scheme (TSS) on Schnorr Signature - BIP340](./mpc/schnorr-tss.md)
 
 [Threshold signature scheme (TSS) on EDDSA](./mpc/eddsa-tss.md)
 

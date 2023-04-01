@@ -29,9 +29,9 @@ Schnorr signatures provide a simple and efficient method that enables multiple c
 ### Point Encoding
 BIP340 specifies a 64-byte Schnorr signature scheme over the elliptic curve secp256k1. EC Point are therefore encoded in the format
 
-$$P=(x_P,y_P) \rightarrow x_{R<(be:o):32>}||\text{0x02}_{<(o):1>}$$
+$$P=(x_P,y_P) \rightarrow x_{R<(be:o):32>}||\mathtt{0x02}_{<(o):1>}$$
 
-This is the $32$ bytes big endian encoding of the $x$-coordinate, which $y$-coordinate, as BIP340 always __implicitly__ chooses the even $y$-coordinate that is even. Despite the implicite selection, BIP340 adds the indication of the $y$-coordinate, always $\text{0x02}_{<(o):1>}$ to keep backward compatibility with compressed point encoding of ECDSA. In this document we use the notation $P_{<(bip340:o):33>}$ to represent an encoded point.
+This is the $32$ bytes big endian encoding of the $x$-coordinate, which $y$-coordinate, as BIP340 always __implicitly__ chooses the even $y$-coordinate that is even. Despite the implicit selection, BIP340 adds the indication of the $y$-coordinate, always $\mathtt{0x02}_{<(o):1>}$ to keep backward compatibility with compressed point encoding of ECDSA. In this document we use the notation $ P_{<(bip340:o):33>}$ to represent an encoded point.
 
 ### Signature
 As defined by BIP340, EC Schnorr signature for

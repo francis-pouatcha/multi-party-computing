@@ -214,6 +214,5 @@ Knowing $aG$ and $bG$, any other party will have to compute $a$ from $aG$ or $b$
 ## N-Parties ECDH
 ECDH can be extended to run among $n$ parties with $n-1$ communication rounds. E.g.: $aG, bG, cG$ are sent around. Then $(a \times b)G, (b \times c)G, (a \times c)G$ are sent around. Finally all parties can compute $(a \times b \times c)G$.
 
-
 # Next
-Proceed with [Threshold signature scheme (TSS) on ECDSA](./mpc/ecdsa-tss.md).
+Proceed with [Threshold signature scheme (TSS) on ECDSA](./ecdsa-tss.md).

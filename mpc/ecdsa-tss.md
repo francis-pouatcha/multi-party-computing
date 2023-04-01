@@ -17,10 +17,10 @@ without disclosing neither $k$ nor $a$ to a single party.
 Remark that we use $1 \over k$ to compute $R$ instead of $k$. We get the same result, as we use $k$ in the signature computation instead of $1 \over k$. But this approach increases the linearity of the signature computation and makes additive sub-signatures easy to compute.
 
 ## Computing Individual Secret Shares $a_h$
-We assume secret shares are generated according to the procedure defined in [computing the distributed secret polynomial](./dkg-tss.md#computing-a-distributed-secret-polynomial). At the end of the key generation process, each party $P_h, h \in H = \\{1, \dots, n\\}$ is in possession of a point $(x_h, f(x_h))$ on the distributed secret polynomial $f(x)$. The value $a_h=f(x_h)$ is called the secret share of $P_h$ and is only known to $P_h$.
+We assume secret shares are generated according to the procedure defined in [computing the distributed secret polynomial](./dkg-tss.md#computing-a-distributed-secret-polynomial). At the end of the key generation process, each party $P_h, h \in H = \set{1, \dots, n}$ is in possession of a point $(x_h, f(x_h))$ on the distributed secret polynomial $f(x)$. The value $a_h=f(x_h)$ is called the secret share of $P_h$ and is only known to $P_h$.
 
 ## Interpolation of Individual Shares of $w_c$
-As soon as we know the set of participants $C=\\{1, \dots, t+1\\} \subset H$, involved in the distributed computation, each $P_c$ interpolate its share $a_c \equiv f(x_c)$ into $t+1$ additive parts $w_c$ of the distributed secret $a$ such that
+As soon as we know the set of participants $C=\set{1, \dots, t+1} \subset H$, involved in the distributed computation, each $P_c$ interpolate its share $a_c \equiv f(x_c)$ into $t+1$ additive parts $w_c$ of the distributed secret $a$ such that
 
 $$a = \sum_{c=1}^{t+1}w_c$$
 
@@ -29,7 +29,7 @@ This is explained in detail in [retrieving the secret](./dkg-tss.md#retrieving-t
 Remark that we are using the symbol $a$ to represent the secret instead of $s$, as the last one is used in the page to reference the signature.
 
 ## Distributed Computation
-The TSS challenge consists in coordinating a distributed computation among members of subset $C = \\{1, \dots, t+1\\} \subset H$, to jointly produce the signature
+The TSS challenge consists in coordinating a distributed computation among members of subset $C = \set{1, \dots, t+1} \subset H$, to jointly produce the signature
 
 $$
 \begin{aligned}
@@ -210,3 +210,6 @@ $$
 The MtAwc requires a range proof of values shared among parties, as [GG20](https://eprint.iacr.org/2020/540) and [CGGMP](https://eprint.iacr.org/2021/060) use the paillier homomorphic encryption to perform MtA.
 
 This aspect was omitted here for simplicity.
+
+# Next
+Proceed with [Threshold signature scheme (TSS) on Schnorr Signature - BIP340](./schnorr-tss.md).
