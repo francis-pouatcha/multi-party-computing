@@ -36,3 +36,6 @@ find the [discrete log](https://en.wikipedia.org/wiki/Discrete_logarithm) $k$ su
 
 Recall in this group, $k=log_{b}{(a)}$ is assumed to be hard to compute.
 
+# Next
+Proceed with [distributed key generation](./dkg-tss.md).
+
