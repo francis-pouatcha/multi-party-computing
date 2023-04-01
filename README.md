@@ -7,33 +7,33 @@ MPC allows developers to build secure, privacy-preserving applications in variou
 
 The following figure is at the heart of distributed key generation.
 
-![Sharmir Secret Sharing](/img/polynomial_add_3x2.png)
+![Sharmir Secret Sharing](/mpc/img/polynomial_add_3x2.png)
 
 Each line hides a secret. The green as the sum of both red and blue line hides the distributed secret. I hope simple enough, not to scare away the reader.
 
 # Content
 
 ## Fundamentals
-[Computational hardness assumptions](./cha.md)
+[Computational hardness assumptions](./mpc/cha.md)
 
-[Distributed key generation](./dkg-tss.md)
+[Distributed key generation](./mpc/dkg-tss.md)
 
 ## EC Cryptography
-[Fields, groups, elliptic curves and associated hardness assumptions](./ecgroups.md)
+[Fields, groups, elliptic curves and associated hardness assumptions](./mpc/ecgroups.md)
 
-[Threshold signature scheme (TSS) on ECDSA](./ecdsa-tss.md). See [this for ECDSA basics ](./ecdsa.md).
+[Threshold signature scheme (TSS) on ECDSA](./mpc/ecdsa-tss.md). See [this for ECDSA basics ](./mpc/ecdsa.md).
 
-[Schnorr signature - BIP340](./schnorr-tss.md)
+[Schnorr signature - BIP340](./mpc/schnorr-tss.md)
 
-[Threshold signature scheme (TSS) on EDDSA](./eddsa-tss.md)
+[Threshold signature scheme (TSS) on EDDSA](./mpc/eddsa-tss.md)
 
 ## Pairings
-[BLS on pairings](./pairings.md)
+[BLS on pairings](./mpc/pairings.md)
 
 ## Privacy
-[ECDSA - BIP32](./bip32.md)
+[ECDSA - BIP32](./mpc/bip32.md)
 
-[EDDSA - BIP32](./ed-bip32.md)
+[EDDSA - BIP32](./mpc/ed-bip32.md)
 
 # Rationales
 
