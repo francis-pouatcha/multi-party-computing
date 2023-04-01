@@ -60,19 +60,19 @@ As displayed above, in this document, we will use the $\sum$ symbol for the disp
 The group element $G$ is called the generator of the group.
 
 ## Finite Cyclic Group
-This is a group $(\mathbb{G}, \circ, E, G)$ on the set $\mathbb{G}=$ { $E, G, 2G, 3G, \dots, (p-1)G$ }, with a finite number of elements $p \in \mathbb{Z}$, where:
+This is a group $(\mathbb{G}, \circ, E, G)$ on the set $\mathbb{G}=\set{E, G, 2G, 3G, \dots, (p-1)G}$, with a finite number of elements $p \in \mathbb{Z}$, where:
 - $E$ is the identity element,
 - $\forall_{i \in \mathbb{Z_p}, j \in {\mathbb{Z}}}, i \equiv j \pmod p \implies iG=jG$,
 - $pG=0G=E$ and
 - $(-1)G = (p-1)G$ is the inverse of the generator, meaning
-  
-  $$
-  \begin{aligned}
-  &(1)G \circ (-1)G = (1-1)G=0G=E
-  \\
-  &(1)G \circ (p-1)G = (1+p-1)G=pG=E
-  \end{aligned}
-  $$
+
+$$
+\begin{aligned}
+&(1)G \circ (-1)G = (1-1)G=0G=E
+\\
+&(1)G \circ (p-1)G = (1+p-1)G=pG=E
+\end{aligned}
+$$
 
 
 It turns out that $(\mathbb{G}, \circ, E, G)$ has exactly $p$ elements. The number $p$ is called the order of the generator $G$, leading to the representation $(\mathbb{G}, \circ, E, G, p)$.
