@@ -199,15 +199,20 @@ $$
 # Schnorr n-of-n Multi Signature
 A signature aggregation scheme for Schnorr allows $n:n$ multi signatures which, from a verifier's perspective, are no different from ordinary signatures.
 
-Let a group of $n$ signers with the set $L = \set{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG}$ be their public keys, means the common secret $a = \sum_{h=1}^n a_h$.
+Let a group of $n$ signers with the set $L = \set{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG}$ be their public keys, means the common secret 
+$$a = \sum_{h=1}^n a_h$$
 
 In order to sign a message $M$, each signer $P_h$
 - selects a large random prime $r_h \in \mathbb{Z_p}$ and
 - computes and publishes $R_h = r_hG \text{ and } A_h=a_hG$
 
 Upon receiving all $R_h, A_h$, each signer $P_h$
-- computes the random number $R = \sum_{h=1}^n R_h$. these are simple point additions
-  
+- computes the random number 
+
+$$R = \sum_{h=1}^n R_h$$
+
+  these are simple point additions
+
 $$
 \begin{aligned}
 R &= \sum_{h=1}^n R_h \equiv (\sum_{h=1}^nr_h)G = rG \text{, where }
@@ -226,6 +231,7 @@ Having the values $R, A$, each signer
 - publishes the signature scalar $s_h$
 
 Upon receiving all $s_h$, each signer $P_h$ can compute $s = \sum_{h=1}^ns_h$ which is equivalent to:
+
 $$
 \begin{aligned}
 s &= \sum_{h=1}^ns_h
@@ -243,19 +249,23 @@ $$
 Each party can publish the signature string $\sigma_{<(o):65>} = R_{<(bip340:o):33>}||s_{<(be:o):32>}$
 
 ## Rogue-key attack
-This protocol is vulnerable to a rogue-key attack where a corrupted signer reports its public key $A_n = A - \sum_{h=1}^{n-1}A_h$ to orchestrate the production of a preknown public key $A = aG$. The reporter will then be able to use a known private key $a$ to produce signatures without the collaboration of other parties. Details can be found [here](https://courses.csail.mit.edu/6.857/2020/projects/4-Elbahrawy-Lovejoy-Ouyang-Perez.pdf).
+This protocol is vulnerable to a rogue-key attack where a corrupted signer reports its public key 
+
+$$A_n = A - \sum_{h=1}^{n-1}A_h$$
+
+ to orchestrate the production of a pre-known public key $A = aG$. The reporter will then be able to use a known private key $a$ to produce signatures without the collaboration of other parties. Details can be found [here](https://courses.csail.mit.edu/6.857/2020/projects/4-Elbahrawy-Lovejoy-Ouyang-Perez.pdf).
 
 ## BIP32 HD Keys for n-of-n
 Using [BIP32](./bip32.md) to produce deterministic $A_h$ and $R_h$ from the same pretested child key indexes will help parties prevent one of them to be malicious.
 
-Recall children key indexes might derive invalide keys, all parties agree upon idex ranges that are tested by all parties.
+Recall children key indexes might derive invalid keys, all parties agree upon idex ranges that are tested by all parties.
 
 # Schnorr Threshold Signature
 ## Threshold Secret Sharing
 Threshold signature requires a $t$ of $n$ secret sharing scheme as defined in [DKG-TSS](./dkg-tss.md).
 
 ## Threshold Signature
-Assume a group of $n$ signers $P_h, h \in H = \\{1, \dots, n\\}$, with the set $L = \\{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG\\}$ of their respective public keys. The common public key 
+Assume a group of $n$ signers $P_h, h \in H = \set{1, \dots, n}$, with the set $L = \set{A_1=a_1G, A_2=a_2G, \dots, A_n=a_nG}$ of their respective public keys. The common public key 
 
 $$A = \sum_{h=1}^n A_h$$
 
@@ -269,7 +279,7 @@ This is explained in detail in [retrieving the secret](./dkg-tss.md#retrieving-t
 Remark that we are using the symbol $a$ to represent the secret instead of $s$, as the last one is used in the page to reference the signature.
 
 ## Distributed Computation
-The TSS challenge consists in coordinating a distributed computation among members of subset $C = \\{1, \dots, t+1\\} \subset H$, to jointly produce the signature of the message $M$.
+The TSS challenge consists in coordinating a distributed computation among members of subset $C = \set{1, \dots, t+1} \subset H$, to jointly produce the signature of the message $M$.
 
 Each $P_c$ must select a random number $r_c \in_R \mathbb{Z_p}$ and compute and publish $R_c = r_cG$.
 
@@ -286,7 +296,7 @@ Upon receiving $s_c$, each party can compute the common signature
 
 $$s = \sum_{h=1}^{t+1}s_c$$
 
-This signature will verify like any other schnorr signature.
+This signature will verify like any other Schnorr signature.
 
 ## Schnorr TSS and BIP32 HD Keys
 ### Preventing Rogue-key attack
@@ -333,3 +343,6 @@ $$s_{child:i} = \sum_{h=1}^{t+1}s_{child:c:i}$$
 Remark that we can produce $r_{child:c:i'}$ using simple key derivation on the index $i' \ne i$.
 
 This all makes the combination of BIP32 and BIP340 very powerful for the implementation of key recovery processes with offline parties. As the only interactions needed are for the threshold DKG. Aggregate signatures can be gathered by any party.
+
+# Next
+Proceed with [Threshold signature scheme (TSS) on EDDSA](./eddsa-tss.md)

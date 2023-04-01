@@ -1,12 +1,12 @@
 # Ed25519-BIP32
-[BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) defines a procedure for deriving ec-keypairs from parent keys. For ed25519 keypairs, we found this work [Ed25519-BIP](https://input-output-hk.github.io/adrestia/static/Ed25519_BIP.pdf) to be the most promissing.
+[BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) defines a procedure for deriving ec-keypairs from parent keys. For ed25519 keypairs, we found this work [Ed25519-BIP](https://input-output-hk.github.io/adrestia/static/Ed25519_BIP.pdf) to be the most promising.
 
 The definition of bit and byte strings as used here is found in [strings expressions](./conv-ser-enc.md).
 
 ## Little Endianness
 For EdDSA and the corresponding ed-BIP32 key derivation process, all bytes to number encodings and decodings are performed assuming the __little endian__ oder of the underlying octet string.
 
-Nevertheless, we will still be explicitly indicating it using e.g. $a_{<(le:o):32>}$ to indicate the scalar number $s$ as being from a $32$ bytes litle endian string. 
+Nevertheless, we will still be explicitly indicating it using e.g. $a_{<(le:o):32>}$ to indicate the scalar number $s$ as being from a $32$ bytes little endian string. 
 
 ## Producing an ed25519 Extended Master Key
 Following steps produce a key for use with ed255519:
@@ -14,10 +14,10 @@ Following steps produce a key for use with ed255519:
 - normalize the random bit string $s$, computing $k_{<(b):512>} = sha512(FLAG_{<(b):?>} || s_{<(b):256>})$. Adding domain flags will keep different specification of EdDSA separated for the same secret input string $s$.
 - If $k_{<(b):512:[250]>}\ne0_{<(b):1>}$, then discard $s_{<(b):256>}$, and generate a new random secret,
   - This is the $3d$ highest bit of the last byte.
-  - The purpose of this operation is to keep the root private key small enougth $a \lt 2^{254} -8k_L$, with $k_L \lt 2^{250}$, such that derived private key will all be in range as compatible ed25519 private keys. See original paper at [Ed25519-BIP](https://input-output-hk.github.io/adrestia/static/Ed25519_BIP.pdf) for more detail.
+  - The purpose of this operation is to keep the root private key small enough $a \lt 2^{254} -8k_L$, with $k_L \lt 2^{250}$, such that derived private key will all be in range as compatible ed25519 private keys. See original paper at [Ed25519-BIP](https://input-output-hk.github.io/adrestia/static/Ed25519_BIP.pdf) for more detail.
   - If we are not generating $s$, but using a commonly defined seed, we can set $k_{<(b):512:[250]>}=0_{<(b):1>}$, to achieve the same result (todo: verify).
 - set $k_{<(b):512:[0:2]>}=0_{<(b):[0:2]>}$, clearing first 3 lower bits of $k_L = k_{<b:512:[:255]>}$
-  - This ensure as per curve25519 that the private key is allways a factor of 8. $c = log_2(8) = 3$.
+  - This ensure as per curve25519 that the private key is always a factor of 8. $c = log_2(8) = 3$.
   - $8$ being the cofactor of the curve, means the number of the points on the curve is $8p$, where p is the order of the generator $G$, we have to reject all points of order $\le 8$ to [prevent some attacks](https://crypto.stackexchange.com/questions/12425/why-are-the-lower-3-bits-of-curve25519-ed25519-secret-keys-cleared-during-creati).
 - set $k_{<(b):512:[255]>}=0_{<(b):1>}$, clearing the last bit of $k_L$
   - $n = 254$. Starting with $2^{254}$, we set the lower bound of the secret scalar and clear the high order bit at $255$.
@@ -100,3 +100,6 @@ the resulting key is invalid, and one should proceed with the next value for $i_
 
 # Security Properties
 We are not aware of any formal security analysis of this scheme.
+
+# Next
+Proceed with [Threshold signature scheme (TSS) on EDDSA](./eddsa-tss.md)

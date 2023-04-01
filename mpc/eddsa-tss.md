@@ -310,3 +310,6 @@ Upon receiving all $s_{child:i:c}$, each party can compute the common signature
 $$s_{child:i} = \sum_{h=1}^{t+1}s_{child:i:c}$$
 
 This looks like a powerful tool for key recovery procedures including the use of offline parties, as interaction is barely needed for the signature of messages.
+
+# Next
+Proceed with [BLS on pairings](./pairings.md).

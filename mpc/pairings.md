@@ -86,7 +86,7 @@ Recall that with only two secret scalars $(a, b)$ and the public images $aG_1, b
 
 If we add another secret scalar scalar $c$, so that we also publish $cG_1$ and $cG_2$, then we can make it challenging to compute $(a \times b \times c)G_t$. Recall that using $f$, we can compute $(a \times b)G_t, (a \times c)G_t \text{ and } (b \times c)G_t$.
 
-Only the owners of any of the secret scallars $a, b \text{ or } c$ can compute the common secret element $(a \times b \times c)G_t$.
+Only the owners of any of the secret scalars $a, b \text{ or } c$ can compute the common secret element $(a \times b \times c)G_t$.
 
 ## Decisional DHP
 Given secret scalars $a, b, c$, and public images $aG_1, bG_1, cG_1$, the DDHP wants to decide if $cG_1 = (a \times b)G_1$ meaning if $c = a \times b$.
@@ -123,7 +123,7 @@ Let $(\mathbb{E_{(\mathbb{F}_{p^n})}}, \circ, O, G, q)$ be the definition of an 
 - $G$ is the generator point,
 - $q$ is the order of the group generator $G$, or the number of points on curve $\mathbb{E}$ that can be generated from $G$, 
   - meaning that $qG = O$
-  - meaning that all operations on the saclar $n$ such that $nG \in \mathbb{E}$ are performed modulo $q$
+  - meaning that all operations on the scalar $n$ such that $nG \in \mathbb{E}$ are performed modulo $q$
 - Coordinates of point $P = (x_p, y_p)$ are elements of $\mathbb{F_{p^n}}$. This means all operations on $x_p, y_p$ are done modulo $p^n$.
 - Recall that $q \le p^n$
 
@@ -170,6 +170,11 @@ $$
 Using a pairing function like $f$ defined above, open room for the validation of quadratic constraints.
 
 ## Cryptographic Applications
-The ability to use elliptic curves and pairings to check linear and quadratic constraints on integers open room for the construction of cryptographic signature schemes, zero knowledge quadratic arithmetic programms and many more. 
+The ability to use elliptic curves and pairings to check linear and quadratic constraints on integers open room for the construction of cryptographic signature schemes, zero knowledge quadratic arithmetic programs and many more. 
 
-More to this to come.s
+More to this to come.
+
+# Next
+Proceed with [Threshold signature scheme (TSS) on ECDSA](./ecdsa-tss.md).
+
+

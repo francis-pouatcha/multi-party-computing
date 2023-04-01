@@ -58,7 +58,7 @@ Where
 - $A_{parent<(ec:o):33>}$ is the $33$ octets compressed representation of the parent public key point. This is also known as elliptic curve point encoding (ec), and
 - $i_{child<(be:o):4>}$ is the $4$ octets big endian representation of the child index. Recall $i_{child} \lt 2^{31}$ for neutered derivation.
 
-The resulting bit string $z_{n<(b):512>}$ is splitted into two, $z_{nL}$ and $z_{nR}$ such that:
+The resulting bit string $z_{n<(b):512>}$ is split into two, $z_{nL}$ and $z_{nR}$ such that:
 - $n_{pub:i<(be:o):32>} = z_{nL} = z_{n<(b):512:[:255]>}$ is the child's random number from the parent public key. $z_{n<(b):512:[:255]>}$ selects the first $256$ bits of the string. Those are reorganized into a $32$-octet string in big endian byte order and read as a $32$ byte integer.
 - $A_{child:i} = n_{pub:i}G \circ A_{parent}$, is the child's public key. This is a simple point addition as the same random number is added to the parent private key to form the child's private key.
 - $c_{child:i<(be:o):32>} = z_{nR} = z_{n<(b):512:[256:]>}$ is the child's chain code
@@ -92,3 +92,6 @@ the resulting key is invalid, and one should proceed with the next value for $i_
 For security properties of BIP32 keys, visit the original proposal at [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki).
 
 For a more formal analysis of the security of BIP32 keys, visit: [The Exact Security of BIP32 Wallets](https://eprint.iacr.org/2021/1287).
+
+# Next
+Proceed with [Threshold signature scheme (TSS) on ECDSA](./ecdsa-tss.md).

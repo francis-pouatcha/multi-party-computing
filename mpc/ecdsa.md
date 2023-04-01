@@ -87,3 +87,6 @@ Knowing the signature information $(r, s)$ and the message $M \rightarrow H(M)=m
 - if address $\alpha \equiv H'(A_i)$, then $A = A_i$, return,
 - if address $\alpha \equiv H'(-A_i)$, then $A = -A_i$ return.
 - If none of the conditions satisfies the given address $\alpha$, then the signature is forged.
+
+# Next
+Proceed with [Threshold signature scheme (TSS) on ECDSA](./ecdsa-tss.md).

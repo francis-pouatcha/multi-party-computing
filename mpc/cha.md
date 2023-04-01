@@ -2,7 +2,7 @@
 A [computational hardness assumption](https://en.wikipedia.org/wiki/Computational_hardness_assumption) is the hypothesis that a particular computational problem cannot be solved efficiently.
 
 ## Integer Factorization Problem
-The [integer factorization problem](https://en.wikipedia.org/wiki/Integer_factorization). E.g: fatorizing $30$ into $2 \times 3 \times 5$ looks easy, but for a sufficiently large number like 18848997161, it takes a lot of time for a computer to find the prime factors.
+The [integer factorization problem](https://en.wikipedia.org/wiki/Integer_factorization). E.g: factorizing $30$ into $2 \times 3 \times 5$ looks easy, but for a sufficiently large number like 18848997161, it takes a lot of time for a computer to find the prime factors.
 
 ## RSA Problem
 The [RSA problem](https://en.wikipedia.org/wiki/RSA_problem) states that:

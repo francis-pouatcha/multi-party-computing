@@ -1,7 +1,7 @@
 # Distributed Key Generation
 We want to allow a set of $n$ parties to perform a distributed secure computation, e.g.: jointly sign a document, without any party disclosing its own secret to others. Why, because we want to make sure a single compromised party will not jeopardize the whole procedure.
 
-This can of course happen by the means of each party signing the document, known as multi signature. But in some cases, we want the totality of parties to produce a single signature, or joinly decrypt a single document.
+This can of course happen by the means of each party signing the document, known as multi signature. But in some cases, we want the totality of parties to produce a single signature, or jointly decrypt a single document.
 
 If many keys could be added to each other to form a new single key, producing a distributed key would boil down to having each party $P_h$ produce a key share $s_h$ and the distributed key will end up being considered $s = \sum_{h} s_h$.
 
@@ -14,7 +14,7 @@ As soon as a subset of $t \le n$ is required to be able to produce the computati
 # Shamir Secret Sharing Scheme (SSSS)
 SSSS allows the split of a single secret among $n$ parties, such that no party alone is in possession of the whole secret. It allows the definition of a threshold $t \lt n$ such that $t + 1$ parties are required to make use of the whole secret. The secret data held by a party is called a __share__.
 
-If a secret, e.g.: private key, is made out of $n$ _distincts_ shares distributed among those parties, then $t + 1$ shareholders can collaborate to apply that secret to a distributed computation.
+If a secret, e.g.: private key, is made out of $n$ _distinct_ shares distributed among those parties, then $t + 1$ shareholders can collaborate to apply that secret to a distributed computation.
 
 ## Math
 Assume we can use a secret polynomial $y=-2x+4$ to hide the secret. The secret will be the value of the secret polynomial at a defined point, e.g.: $x_p=0$, and each share will be a random, distinct point on the secret polynomial. Distinct means $\forall_{i,j, i \ne j}, x_i \ne x_j \land x_i \ne x_p$.
@@ -191,7 +191,7 @@ The purpose of threshold computing is to allow a secure distributed computation 
 
 Verification is centered around a party committing to the piece of information generated, without having to disclose that information.
 
-Typical way of commiting a value without disclosing that value can be:
+Typical way of committing a value without disclosing that value can be:
 - disclosing a hash of that value,
 - disclosing a group element that is the public image of that value.
 
@@ -271,4 +271,4 @@ Building on a finite field allows to:
 Most implementations of the SSSS will operate over $\mathbb{F_{(2^8)}}$, that is the field implemented on most computers and used in the AES encryption.
 
 # Next
-Proceed with [Fields, groups, elliptic curves and associated hardness assumptions](./mpc/ecgroups.md).
+Proceed with [Fields, groups, elliptic curves and associated hardness assumptions](./ecgroups.md).
