@@ -254,6 +254,9 @@ This protocol is vulnerable to a rogue-key attack where a corrupted signer repor
 $$A_n = A - \sum_{h=1}^{n-1}A_h$$
 
  to orchestrate the production of a pre-known public key $A = aG$. The reporter will then be able to use a known private key $a$ to produce signatures without the collaboration of other parties. Details can be found [here](https://courses.csail.mit.edu/6.857/2020/projects/4-Elbahrawy-Lovejoy-Ouyang-Perez.pdf).
+ 
+ ## MuSig
+ [MuSig](https://blog.blockstream.com/en-musig-key-aggregation-schnorr-signatures/) define a more secure key and signature aggregation scheme based on Schnorr.
 
 ## BIP32 HD Keys for n-of-n
 Using [BIP32](./bip32.md) to produce deterministic $A_h$ and $R_h$ from the same pretested child key indexes will help parties prevent one of them to be malicious.
